@@ -1,4 +1,4 @@
-package Jogo;
+package Agencia;
 
 public class Funcionario {
 }
