@@ -2,6 +2,7 @@ package Agencia;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -38,58 +39,13 @@ public class Principal {
 
                         switch (op1){
                             case 1:
-                                System.out.println("Que bom que escolheu planejar sua viagem com a gente!");
-                                System.out.println("Qual data deseja viajar? (Formato DD/MM/YYYY)");
-                                String dataString = sc.nextLine();
 
-                                DateTimeFormatter formatar = DateTimeFormatter.ofPattern("DD/MM/YYYY");
-                                try {
-                                    LocalDate data = LocalDate.parse(dataString, formatar);
-                                    System.out.println("Data lida: " + data.format(formatar));
-                                } catch (Exception e) {
-                                    System.out.println("Formato de data inválido. Certifique-se de que está no formato (DD/MM/YYYY).");
-                                }
-
-                                System.out.println("Ótima data! Temos os seguintes destinos disponíveis: ");
-                                System.out.println("1 - Paris");
-                                System.out.println("2 - Estados Unidos");
-                                System.out.println("3 - Espanha");
-                                System.out.println("4 - Canadá");
-                                System.out.println("5 - Grécia");
-                                op2 = sc.nextInt();
-                                sc.nextLine();
 
                                 switch (op2){
                                     case 1:
-                                        System.out.println("Excelente destino! Temos as seguintes opções de Pacotes");
-                                        System.out.println("1 - Pacote A: Roteiro: Hotel A; Atrações A; Tantos dias");
-                                        System.out.println("3 - Pacote B: Roteiro: Hotel B; Atrações B; Tantos dias");
-                                        System.out.println("4 - Pacote C: Roteiro: Hotel C; Atrações C; Tantos dias");
+                                        novaViagem();
                                         break;
-                                    case 2:
-                                        System.out.println("Excelente destino! Temos as seguintes opções de Pacotes");
-                                        System.out.println("1 - Pacote A: Roteiro: Hotel A; Atrações A; Tantos dias");
-                                        System.out.println("3 - Pacote B: Roteiro: Hotel B; Atrações B; Tantos dias");
-                                        System.out.println("4 - Pacote C: Roteiro: Hotel C; Atrações C; Tantos dias");
-                                        break;
-                                    case 3:
-                                        System.out.println("Excelente destino! Temos as seguintes opções de Pacotes");
-                                        System.out.println("1 - Pacote A: Roteiro: Hotel A; Atrações A; Tantos dias");
-                                        System.out.println("3 - Pacote B: Roteiro: Hotel B; Atrações B; Tantos dias");
-                                        System.out.println("4 - Pacote C: Roteiro: Hotel C; Atrações C; Tantos dias");
-                                        break;
-                                    case 4:
-                                        System.out.println("Excelente destino! Temos as seguintes opções de Pacotes");
-                                        System.out.println("1 - Pacote A: Roteiro: Hotel A; Atrações A; Tantos dias");
-                                        System.out.println("3 - Pacote B: Roteiro: Hotel B; Atrações B; Tantos dias");
-                                        System.out.println("4 - Pacote C: Roteiro: Hotel C; Atrações C; Tantos dias");
-                                        break;
-                                    case 5:
-                                        System.out.println("Excelente destino! Temos as seguintes opções de Pacotes");
-                                        System.out.println("1 - Pacote A: Roteiro: Hotel A; Atrações A; Tantos dias");
-                                        System.out.println("3 - Pacote B: Roteiro: Hotel B; Atrações B; Tantos dias");
-                                        System.out.println("4 - Pacote C: Roteiro: Hotel C; Atrações C; Tantos dias");
-                                        break;
+
                                 }
 
 
@@ -97,6 +53,9 @@ public class Principal {
                         }
 
                     }while (op1 != 0);
+                    }else{
+                        System.out.println("Email ou senha invalidos!");
+                        break;
                     }
                     break;
                 case 2:
@@ -186,5 +145,57 @@ public class Principal {
         }
         return false;
     }
+
+    public static boolean novaViagem(){
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            ArrayList<Destino> destinos = new ArrayList<>();
+            destinos.add(new Destino("Paris", "Europa", "A cidade do Amor!", "Torre Eiffel, Arco do Triunfo"));
+            destinos.add(new Destino("Los Angeles", "America do Norte", "A cidade da diversão!!", "Hollywood, cassinos!"));
+            destinos.add(new Destino("Lisboa", "Europa", "A cidade histórica!", "Castelo de São Jorge, Praias paradisíacas!"));
+            destinos.add(new Destino("Ottawa", "America do Norte", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!"));
+            destinos.add(new Destino("Atenas", "Europa", "A cidade eterna, repleta de história e arquitetura magnífica.", "Partenon, Acrópole!"));
+
+            System.out.println("Que bom que escolheu planejar sua viagem com a gente!");
+            System.out.println("Qual data de ida? (Formato DD/MM/YYYY): ");
+            String dataIdaString = sc.nextLine();
+            System.out.println("Data de volta? (Formato DD/MM/YYYY): ");
+            String dataVoltaString = sc.nextLine();
+
+            DateTimeFormatter formatar = DateTimeFormatter.ofPattern("DD/MM/YYYY");
+            try {
+                LocalDate dataIda = LocalDate.parse(dataIdaString, formatar);
+                LocalDate dataVolta = LocalDate.parse(dataVoltaString, formatar);
+            } catch (Exception e) {
+                System.out.println("Formato de data inválido. Certifique-se de que está no formato (DD/MM/YYYY).");
+            }
+
+            System.out.println("Ótima data! Temos os seguintes destinos disponíveis: ");
+            for (int i = 0; i < destinos.size(); i++) {
+                System.out.println(destinos.get(i).getNome());
+            }
+            System.out.print("Qual deseja escolher?: ");
+            String destino = sc.next();
+            sc.nextLine();
+
+            for (Destino d : destinos) {
+                if (d.getNome().equalsIgnoreCase(destino)) {
+                    System.out.println("Destino: " + d.getNome());
+                    System.out.println("Descrição: " + d.getDescricao());
+
+                }
+            }
+            System.out.println("Excelente escolha!");
+            return true;
+        }catch (Exception e){
+            System.out.println("ERRO! TENTE NOVAMENTE");
+            sc.nextLine();
+            return false;
+
+        }
+    }
+
+
 }
 
