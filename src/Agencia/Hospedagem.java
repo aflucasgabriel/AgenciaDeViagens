@@ -27,6 +27,17 @@ public class Hospedagem {
     }
 
 
+    public String getNomeHotel() {
+        return nomeHotel;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public double getPrecoDiaria() {
+        return precoDiaria;
+    }
 
     public boolean validarHospedagem(){
         if (checkout.isAfter(checkin)){
@@ -45,11 +56,15 @@ public class Hospedagem {
     }
 
 
+    public float calcularEstadia(){
 
+        diasEstadia = ChronoUnit.DAYS.between(checkin, checkout);
+        return diasEstadia;
+    }
 
     public double calcularPrecoEstadia(){
         double x;
-        x = calcularEstadia() * precoDiaria;
+        x = diasEstadia * precoDiaria;
         return x;
     }
 

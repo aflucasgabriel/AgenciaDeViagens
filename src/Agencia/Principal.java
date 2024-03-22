@@ -160,13 +160,6 @@ public class Principal {
 
     }
 
-    public static float calcularEstadia(){
-
-        float diasEstadia = ChronoUnit.DAYS.between(dataCheckIn(), dataCheckOut());
-        return diasEstadia;
-    }
-
-
 
     public static boolean novaViagem(){
         Scanner sc = new Scanner(System.in);
@@ -179,17 +172,12 @@ public class Principal {
             destinos.add(new Destino("Ottawa", "America do Norte", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!"));
             destinos.add(new Destino("Atenas", "Europa", "A cidade eterna, repleta de história e arquitetura magnífica.", "Partenon, Acrópole!"));
 
-            try {
             dataCheckIn();
             dataCheckOut();
 
-            } catch (Exception e) {
-                System.out.println("Formato de data inválido. Certifique-se de que está no formato (DD/MM/YYYY).");
-            }
-
             System.out.println("Ótima data! Temos os seguintes destinos disponíveis: ");
-            for (int i = 0; i < destinos.size(); i++) {
-                System.out.println(destinos.get(i).getNome());
+            for (Destino value : destinos) {
+                System.out.println(value.getNome());
             }
             System.out.print("Qual deseja escolher?: ");
             String destino = sc.next();
@@ -203,25 +191,43 @@ public class Principal {
                 }
             }
             System.out.println("Excelente escolha!");
+
+            ArrayList<Hospedagem> hospedagem = new ArrayList<>();
+
+            hospedagem.add(new Hospedagem("Hotel Lotus", "Rua das Palmeiras, 103",
+                    dataCheckIn(), dataCheckOut(), hospedagem.get(0).calcularEstadia(), 150));
+            hospedagem.add(new Hospedagem("Hotel Savana", "Avenida Principal, 6384",
+                    dataCheckIn(), dataCheckOut(), hospedagem.get(1).calcularEstadia(), 200));
+            hospedagem.add(new Hospedagem("Hotel Carlton", "Avenida Doutor Hans Chucrute, 257",
+                    dataCheckIn(), dataCheckOut(), hospedagem.get(2).calcularEstadia(), 300));
+
+
+            for (int i = 0; i < hospedagem.size(); i++) {
+                System.out.println("Nome do Hotel: " + hospedagem.get(i).getNomeHotel() +
+                        "\nPreço Diária: " + hospedagem.get(i).getPrecoDiaria());
+            }
+
+            System.out.print("Qual deseja escolher?: ");
+            String hotel = sc.next();
+            sc.nextLine();
+
+            for (Hospedagem h : hospedagem){
+                if(h.getNomeHotel().equalsIgnoreCase(hotel)){
+                    System.out.println("Nome: " + h.getNomeHotel());
+                    System.out.println("Endereço: " + h.getLocalizacao());
+                    System.out.println("Preço total: " + h.calcularPrecoEstadia());
+                }
+            }
+            System.out.println("Excelente escolha!");
+
             return true;
+
         }catch (Exception e){
             System.out.println("ERRO! TENTE NOVAMENTE");
             sc.nextLine();
             return false;
-
         }
-
-        ArrayList<Hospedagem> hospedagem = new ArrayList<>();
-
-        hospedagem.add(new Hospedagem("Hotel Lotus", "Rua das Palmeiras, 103", dataCheckIn(), dataCheckOut(), calcularEstadia(), 150));
-        hospedagem.add(new Hospedagem("Hotel Savana", "Avenida Principal, 6384", dataCheckIn(), dataCheckOut(), calcularEstadia(), 200));
-        hospedagem.add(new Hospedagem("Hotel Carlton", "Avenida Doutor Hans Chucrute, 257", dataCheckIn(), dataCheckOut(), calcularEstadia(), 300));
-
-
-
 }
-
-
 
 
 }
