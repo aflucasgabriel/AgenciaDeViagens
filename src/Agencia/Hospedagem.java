@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 public class Hospedagem {
-
-    private Hotel hotel1;
-    private ArrayList<Hotel> hoteis;
+    private String nomeHotel;
+    private String localizacao;
+    double precoDiaria;
     private LocalDate checkin;
     private LocalDate checkout;
     private float diasEstadia;
-    private double precoDiaria;
-
     private boolean cancelarReserva;
 
 
-    public Hospedagem(LocalDate checkin, LocalDate checkout, float diasEstadia, double precoDiaria) {
+    public Hospedagem(String nomeHotel, String localizacao, LocalDate checkin, LocalDate checkout, float diasEstadia, double precoDiaria) {
+        this.nomeHotel = nomeHotel;
+        this.localizacao = localizacao;
         this.checkin = checkin;
         this.checkout = checkout;
         this.diasEstadia = diasEstadia;
@@ -26,14 +26,11 @@ public class Hospedagem {
         this.cancelarReserva = false;
     }
 
-    public Hospedagem() {
 
-        this.hoteis = new ArrayList<>();
-    }
 
     public boolean validarHospedagem(){
         if (checkout.isAfter(checkin)){
-            System.out.println("Parabens, hospedagem no hotel " + hotel.getNomeHotel() +"!");
+            System.out.println("Parabens, hospedagem no hotel " + nomeHotel +"!");
             return true;
         }else{
             return false;
@@ -47,11 +44,7 @@ public class Hospedagem {
         return cancelarReserva;
     }
 
-    public float calcularEstadia(){
 
-        diasEstadia = ChronoUnit.DAYS.between(checkin, checkout);
-        return diasEstadia;
-    }
 
 
     public double calcularPrecoEstadia(){
@@ -60,29 +53,12 @@ public class Hospedagem {
         return x;
     }
 
-    public void adicionarHotel(Hotel hotel) {
-        hoteis.add(hotel);
-    }
-
-    public Hotel consultarHotel(String nomeHotel) {
-        for (Hotel hotel : hoteis) {
-            if (hotel.getNomeHotel().equals(nomeHotel)) {
-                return hotel;
-            }
-        }
-        return null; // Retorna null se o hotel não for encontrado
-    }
-
     public String relatorio(){
         String x = "";
         String y = "";
 
-
-
         x = "Nome do Hotel: " +  +"\nData Checkin: " + checkin + "\nData Checkout: " + checkout +
                 "\nPreço Hospedagem: " + calcularEstadia() + "\nReserva ativa: " + cancelarReserva;
-
-
         return y + x;
 
     }

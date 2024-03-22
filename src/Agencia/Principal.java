@@ -2,6 +2,7 @@ package Agencia;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.BufferedReader;
@@ -39,19 +40,9 @@ public class Principal {
 
                         switch (op1){
                             case 1:
-
-
-                                switch (op2){
-                                    case 1:
-                                        novaViagem();
-                                        break;
-
-                                }
-
-
+                                novaViagem();
                                 break;
                         }
-
                     }while (op1 != 0);
                     }else{
                         System.out.println("Email ou senha invalidos!");
@@ -146,6 +137,37 @@ public class Principal {
         return false;
     }
 
+    public static LocalDate dataCheckIn(){
+        Scanner sc = new Scanner(System.in);
+        DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        System.out.println("Que bom que escolheu planejar sua viagem com a gente!");
+        System.out.println("Qual data de ida? (Formato DD/MM/YYYY): ");
+        String dataIdaString = sc.nextLine();
+
+            return LocalDate.parse(dataIdaString, formatar);
+
+    }
+
+    public static LocalDate dataCheckOut(){
+        Scanner sc = new Scanner(System.in);
+        DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        System.out.println("Qual data de ida? (Formato DD/MM/YYYY): ");
+        String dataVoltaString = sc.nextLine();
+
+        return LocalDate.parse(dataVoltaString, formatar);
+
+    }
+
+    public static float calcularEstadia(){
+
+        float diasEstadia = ChronoUnit.DAYS.between(dataCheckIn(), dataCheckOut());
+        return diasEstadia;
+    }
+
+
+
     public static boolean novaViagem(){
         Scanner sc = new Scanner(System.in);
 
@@ -157,16 +179,10 @@ public class Principal {
             destinos.add(new Destino("Ottawa", "America do Norte", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!"));
             destinos.add(new Destino("Atenas", "Europa", "A cidade eterna, repleta de história e arquitetura magnífica.", "Partenon, Acrópole!"));
 
-            System.out.println("Que bom que escolheu planejar sua viagem com a gente!");
-            System.out.println("Qual data de ida? (Formato DD/MM/YYYY): ");
-            String dataIdaString = sc.nextLine();
-            System.out.println("Data de volta? (Formato DD/MM/YYYY): ");
-            String dataVoltaString = sc.nextLine();
-
-            DateTimeFormatter formatar = DateTimeFormatter.ofPattern("DD/MM/YYYY");
             try {
-                LocalDate dataIda = LocalDate.parse(dataIdaString, formatar);
-                LocalDate dataVolta = LocalDate.parse(dataVoltaString, formatar);
+            dataCheckIn();
+            dataCheckOut();
+
             } catch (Exception e) {
                 System.out.println("Formato de data inválido. Certifique-se de que está no formato (DD/MM/YYYY).");
             }
@@ -194,7 +210,18 @@ public class Principal {
             return false;
 
         }
-    }
+
+        ArrayList<Hospedagem> hospedagem = new ArrayList<>();
+
+        hospedagem.add(new Hospedagem("Hotel Lotus", "Rua das Palmeiras, 103", dataCheckIn(), dataCheckOut(), calcularEstadia(), 150));
+        hospedagem.add(new Hospedagem("Hotel Savana", "Avenida Principal, 6384", dataCheckIn(), dataCheckOut(), calcularEstadia(), 200));
+        hospedagem.add(new Hospedagem("Hotel Carlton", "Avenida Doutor Hans Chucrute, 257", dataCheckIn(), dataCheckOut(), calcularEstadia(), 300));
+
+
+
+}
+
+
 
 
 }
