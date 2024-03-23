@@ -251,7 +251,7 @@ public class Principal {
                 if(a.getNomeAtracao().equalsIgnoreCase(atracao)){
                     System.out.println("Nome: " + a.getNomeAtracao());
                     System.out.println("Horario: " + a.getHorario());
-                    System.out.println("Preço total: " + h.calcularPrecoEstadia()); // calcular preço baseado na quantidade de pessoas
+                    System.out.println("Preço total: " + a.getPreco()); // calcular preço baseado na quantidade de pessoas
                 }
             }
 
