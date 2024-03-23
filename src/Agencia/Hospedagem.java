@@ -72,7 +72,7 @@ public class Hospedagem {
         String x = "";
         String y = "";
 
-        x = "Nome do Hotel: " +  +"\nData Checkin: " + checkin + "\nData Checkout: " + checkout +
+        x = "Nome do Hotel: " + getNomeHotel() +"\nData Checkin: " + checkin + "\nData Checkout: " + checkout +
                 "\nPreço Hospedagem: " + calcularEstadia() + "\nReserva ativa: " + cancelarReserva;
         return y + x;
 

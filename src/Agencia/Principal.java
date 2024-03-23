@@ -72,14 +72,17 @@ public class Principal {
         try {
             System.out.print("Digite seu nome completo: ");
             String nome = sc.next();
+            System.out.print("Digite sua data de nascimento (dd/MM/yyyy): ");
+            String dataNasc = sc.next();
             System.out.print("Digite seu email: ");
             String email = sc.next();
             System.out.print("Digite sua senha: ");
             String senha = sc.next();
 
+
             System.out.println("Obrigado!");
 
-            String print = nome + ";" + email + ";" + senha;
+            String print = nome + ";" + email + ";" + senha + ";" + dataNasc;
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("Clientes.txt"))) {
                 writer.write(print);
@@ -191,6 +194,7 @@ public class Principal {
                 }
             }
             System.out.println("Excelente escolha!");
+            System.out.println("Agora vamos escolher qual hotel deseja se hospedar para ter a melhor experiência!");
 
             ArrayList<Hospedagem> hospedagem = new ArrayList<>();
 
@@ -219,6 +223,40 @@ public class Principal {
                 }
             }
             System.out.println("Excelente escolha!");
+
+            System.out.println("Vamos as atrações que estão incluídas no pacote!");
+
+            ArrayList<Atração> atracoes = new ArrayList<>();
+
+            atracoes.add(new Atração("Pontos Turísticos", "Um passeio incrível por todos os pontos turísticos da cidade!", "8h às 15h", 150, "Ponto Turistico"));
+            atracoes.add(new Atração("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural"));
+            atracoes.add(new Atração("Teatros, Concertos e Óperas", "Ingressos para eventos culturais que estão acontecendo na cidade!", "15h às 23h", 200, "Cultural"));
+            atracoes.add(new Atração("Restaurantes", "Uma mesa reservada nos 2 melhores restaurantes para você conhecer a culinaria local!", "17h às 23h", 80, "Gastronômico"));
+            atracoes.add(new Atração("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico"));
+            atracoes.add(new Atração("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza"));
+            atracoes.add(new Atração("Spa", "Quer algo mais tranquilo pra relaxar? Um dia de spa para voce!", "8h às 21h", 100, "Bem estar"));
+            atracoes.add(new Atração("Esportes Radicais", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes"));
+            atracoes.add(new Atração("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes"));
+
+            for (int i = 0; i < atracoes.size(); i++) {
+                System.out.println((i) + atracoes.get(i).getNomeAtracao() +
+                        "\nPreço Por Pessoa: " + atracoes.get(i).getPreco() + "\nDescrição: " + atracoes.get(i).getDescricao());
+            }
+
+            System.out.print("Qual deseja escolher?: ");
+            String atracao = sc.next();
+            sc.nextLine();
+
+            for (Atração a : atracoes){
+                if(a.getNomeAtracao().equalsIgnoreCase(atracao)){
+                    System.out.println("Nome: " + a.getNomeAtracao());
+                    System.out.println("Horario: " + a.getHorario());
+                    System.out.println("Preço total: " + h.calcularPrecoEstadia()); // calcular preço baseado na quantidade de pessoas
+                }
+            }
+
+
+
 
             return true;
 
