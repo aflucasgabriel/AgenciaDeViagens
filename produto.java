@@ -1,3 +1,7 @@
+//Eu fiz essa classe mais simples na parte de calcular o pacote, pensando que no main vai estar alguns pacotes já definidos. 
+//Até pensei em definir alguns pacotes de viagem dentro , só que pelo que eu entendi tem que ser definido no main.
+// Caso queiram que acrescentar ou mudar mais alguma coisa e só falar.
+
 
 public class Produto{
     private double preco;
