@@ -1,85 +1,82 @@
-package Agencia;
+package com.example.trabalho;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 public class Hospedagem {
+    // atributos 
     private String nomeHotel;
     private String localizacao;
-    double precoDiaria;
-    private LocalDate checkin;
-    private LocalDate checkout;
-    private float diasEstadia;
-    private boolean cancelarReserva;
+    private int NumPessoasQuarto;
+    private int QuartosDisponiveis;
+    private List<String> servicosInclusos;
+    private List<String> avaliacoes;
+    private Date dataInicial;
+    private Date dataFinal;
+    int numDias;
+    private double PrecoDiario;
 
 
-    public Hospedagem(String nomeHotel, String localizacao, LocalDate checkin, LocalDate checkout, float diasEstadia, double precoDiaria) {
+
+    public Hospedagem(String nomeHotel,String localizacao, Date dataInicial, Date dataFinal, int numDias,double PrecoDiario, int QuartosDisponiveis){
+        this.numDias = numDias;
         this.nomeHotel = nomeHotel;
         this.localizacao = localizacao;
-        this.checkin = checkin;
-        this.checkout = checkout;
-        this.diasEstadia = diasEstadia;
-        this.precoDiaria = precoDiaria;
-        this.cancelarReserva = false;
+        this.QuartosDisponiveis = QuartosDisponiveis;
+       // this.servicosInclusos = servicosInclusos;
+        this.avaliacoes = new ArrayList<>();
+        this.dataInicial = dataInicial;
+        this.dataFinal = dataFinal;
+        this.PrecoDiario = PrecoDiario;
+
+
     }
 
+    //método calcular preço
 
-    public String getNomeHotel() {
-        return nomeHotel;
+    public double calcularPreco(int numDias) {
+        return PrecoDiario * numDias;
     }
 
-    public String getLocalizacao() {
-        return localizacao;
-    }
+    //método reservar 
 
-    public double getPrecoDiaria() {
-        return precoDiaria;
-    }
-
-    public boolean validarHospedagem(){
-        if (checkout.isAfter(checkin)){
-            System.out.println("Parabens, hospedagem no hotel " + nomeHotel +"!");
+    public boolean reservar(){
+        if (QuartosDisponiveis >= numQuartos){
+        QuartosDisponiveis --;
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 
-    public void cancelar(){
-        cancelarReserva = true;
-    }
-    public boolean isReservaCancelada(){
-        return cancelarReserva;
-    }
+    //cancelar 
 
+    public boolean cancelar(){
 
-    public float calcularEstadia(){
+        QuartosDisponiveis ++;
+        boolean b = !reservar();
 
-        diasEstadia = ChronoUnit.DAYS.between(checkin, checkout);
-        return diasEstadia;
+        return b;
     }
 
-    public double calcularPrecoEstadia(){
-        double x;
-        x = diasEstadia * precoDiaria;
-        return x;
+    public void relatotioAvaliacao(String avaliacao){
+        avaliacoes.add(avaliacao);
     }
 
-    public String relatorio(){
-        String x = "";
-        String y = "";
-
-        x = "Nome do Hotel: " + getNomeHotel() +"\nData Checkin: " + checkin + "\nData Checkout: " + checkout +
-                "\nPreço Hospedagem: " + calcularEstadia() + "\nReserva ativa: " + cancelarReserva;
-        return y + x;
-
+    public void relatorio(){
+        System.out.println("Nome do Hotel: " + nomeHotel);
+        System.out.println("Localizacao: " + localizacao);
+        System.out.println("Numero de pessoas por quarto: " + NumPessoasQuarto);
+        System.out.println("Quartos Disponíveis: "+ QuartosDisponiveis);
+        System.out.println("Servicos inclusos: " +servicosInclusos);
+        System.out.println("Avaliaçoes: " +avaliacoes);
+        System.out.println("Data inicial: "+dataInicial);
+        System.out.println("Data Final: " +dataFinal);
+        System.out.println("Preco diario:" + PrecoDiario);
     }
-
-
 
 
 
 }
+

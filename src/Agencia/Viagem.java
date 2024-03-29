@@ -2,11 +2,11 @@ package Agencia;
 
 public class Viagem {
     private Destino destino;
-    private Hospedagem hospedagem;
+    private HospedagemEU hospedagemEU;
 
-    public Viagem(Destino destino, Hospedagem hospedagem) {
+    public Viagem(Destino destino, HospedagemEU hospedagemEU) {
         this.destino = destino;
-        this.hospedagem = hospedagem;
+        this.hospedagemEU = hospedagemEU;
     }
 
 

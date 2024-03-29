@@ -2,7 +2,6 @@ package Agencia;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.BufferedReader;
@@ -196,26 +195,26 @@ public class Principal {
             System.out.println("Excelente escolha!");
             System.out.println("Agora vamos escolher qual hotel deseja se hospedar para ter a melhor experiência!");
 
-            ArrayList<Hospedagem> hospedagem = new ArrayList<>();
+            ArrayList<HospedagemEU> hospedagemEU = new ArrayList<>();
 
-            hospedagem.add(new Hospedagem("Hotel Lotus", "Rua das Palmeiras, 103",
-                    dataCheckIn(), dataCheckOut(), hospedagem.get(0).calcularEstadia(), 150));
-            hospedagem.add(new Hospedagem("Hotel Savana", "Avenida Principal, 6384",
-                    dataCheckIn(), dataCheckOut(), hospedagem.get(1).calcularEstadia(), 200));
-            hospedagem.add(new Hospedagem("Hotel Carlton", "Avenida Doutor Hans Chucrute, 257",
-                    dataCheckIn(), dataCheckOut(), hospedagem.get(2).calcularEstadia(), 300));
+            hospedagemEU.add(new HospedagemEU("Hotel Lotus", "Rua das Palmeiras, 103",
+                    dataCheckIn(), dataCheckOut(), hospedagemEU.get(0).calcularEstadia(), 150));
+            hospedagemEU.add(new HospedagemEU("Hotel Savana", "Avenida Principal, 6384",
+                    dataCheckIn(), dataCheckOut(), hospedagemEU.get(1).calcularEstadia(), 200));
+            hospedagemEU.add(new HospedagemEU("Hotel Carlton", "Avenida Doutor Hans Chucrute, 257",
+                    dataCheckIn(), dataCheckOut(), hospedagemEU.get(2).calcularEstadia(), 300));
 
 
-            for (int i = 0; i < hospedagem.size(); i++) {
-                System.out.println("Nome do Hotel: " + hospedagem.get(i).getNomeHotel() +
-                        "\nPreço Diária: " + hospedagem.get(i).getPrecoDiaria());
+            for (int i = 0; i < hospedagemEU.size(); i++) {
+                System.out.println("Nome do Hotel: " + hospedagemEU.get(i).getNomeHotel() +
+                        "\nPreço Diária: " + hospedagemEU.get(i).getPrecoDiaria());
             }
 
             System.out.print("Qual deseja escolher?: ");
             String hotel = sc.next();
             sc.nextLine();
 
-            for (Hospedagem h : hospedagem){
+            for (HospedagemEU h : hospedagemEU){
                 if(h.getNomeHotel().equalsIgnoreCase(hotel)){
                     System.out.println("Nome: " + h.getNomeHotel());
                     System.out.println("Endereço: " + h.getLocalizacao());
