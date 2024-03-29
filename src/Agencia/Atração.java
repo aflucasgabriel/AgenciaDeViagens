@@ -33,6 +33,10 @@ public class Atração {
         return preco;
     }
 
+    public void setPreco(float preco) {
+        this.preco = preco;
+    }
+
     public boolean verificarDisponibilidade(){
 
         if (lotacao >= 25){
