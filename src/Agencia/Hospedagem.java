@@ -1,5 +1,6 @@
-package com.example.trabalho;
+package Agencia;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,25 +14,40 @@ public class Hospedagem {
     private int QuartosDisponiveis;
     private List<String> servicosInclusos;
     private List<String> avaliacoes;
-    private Date dataInicial;
-    private Date dataFinal;
+    private LocalDate dataInicial;
+    private LocalDate dataFinal;
     int numDias;
     private double PrecoDiario;
 
 
 
-    public Hospedagem(String nomeHotel,String localizacao, Date dataInicial, Date dataFinal, int numDias,double PrecoDiario, int QuartosDisponiveis){
-        this.numDias = numDias;
+    public Hospedagem(String nomeHotel, String localizacao, LocalDate dataInicial, LocalDate dataFinal, double PrecoDiario, int QuartosDisponiveis, List<String> servicosInclusos){
+        //this.numDias = numDias;
         this.nomeHotel = nomeHotel;
         this.localizacao = localizacao;
         this.QuartosDisponiveis = QuartosDisponiveis;
-       // this.servicosInclusos = servicosInclusos;
+        this.servicosInclusos = servicosInclusos;
         this.avaliacoes = new ArrayList<>();
         this.dataInicial = dataInicial;
         this.dataFinal = dataFinal;
         this.PrecoDiario = PrecoDiario;
+    }
 
 
+    public String getNomeHotel() {
+        return nomeHotel;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public List<String> getServicosInclusos() {
+        return servicosInclusos;
+    }
+
+    public double getPrecoDiario() {
+        return PrecoDiario;
     }
 
     //método calcular preço
@@ -43,7 +59,7 @@ public class Hospedagem {
     //método reservar 
 
     public boolean reservar(){
-        if (QuartosDisponiveis >= numQuartos){
+        if (QuartosDisponiveis >= 0){
         QuartosDisponiveis --;
             return true;
         }

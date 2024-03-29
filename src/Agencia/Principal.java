@@ -2,7 +2,10 @@ package Agencia;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -159,7 +162,13 @@ public class Principal {
         String dataVoltaString = sc.nextLine();
 
         return LocalDate.parse(dataVoltaString, formatar);
+    }
 
+    public static int dias(){
+        long diferencaEmDias = Math.abs(ChronoUnit.DAYS.between(dataCheckIn(), dataCheckOut()));
+        int diferenca = (int) diferencaEmDias;
+
+        return diferenca;
     }
 
 
@@ -195,55 +204,73 @@ public class Principal {
             System.out.println("Excelente escolha!");
             System.out.println("Agora vamos escolher qual hotel deseja se hospedar para ter a melhor experiência!");
 
-            ArrayList<HospedagemEU> hospedagemEU = new ArrayList<>();
+            ArrayList<Hospedagem> hospedagem = new ArrayList<>();
+            Hospedagem[] hosp = new Hospedagem[4];
+            List<String> servicosHotelLotus = new ArrayList<>();
+            servicosHotelLotus.add("Wi-Fi");
+            servicosHotelLotus.add("Café da manhã");
+            servicosHotelLotus.add("Almoço");
 
-            hospedagemEU.add(new HospedagemEU("Hotel Lotus", "Rua das Palmeiras, 103",
-                    dataCheckIn(), dataCheckOut(), hospedagemEU.get(0).calcularEstadia(), 150));
-            hospedagemEU.add(new HospedagemEU("Hotel Savana", "Avenida Principal, 6384",
-                    dataCheckIn(), dataCheckOut(), hospedagemEU.get(1).calcularEstadia(), 200));
-            hospedagemEU.add(new HospedagemEU("Hotel Carlton", "Avenida Doutor Hans Chucrute, 257",
-                    dataCheckIn(), dataCheckOut(), hospedagemEU.get(2).calcularEstadia(), 300));
+            List<String> servicosHotelSavana = new ArrayList<>();
+            servicosHotelSavana.add("Wi-Fi");
+            servicosHotelSavana.add("Café da manhã");
+            servicosHotelSavana.add("Piscina");
+            servicosHotelSavana.add("Almoço e Janta");
+
+            List<String> servicosHotelCarlton = new ArrayList<>();
+            servicosHotelCarlton.add("Wi-Fi");
+            servicosHotelCarlton.add("Café da manhã");
+            servicosHotelCarlton.add("Piscina");
+            servicosHotelCarlton.add("Academia");
+            servicosHotelCarlton.add("Almoço e Janta");
+            servicosHotelSavana.add("Estacionamento");
 
 
-            for (int i = 0; i < hospedagemEU.size(); i++) {
-                System.out.println("Nome do Hotel: " + hospedagemEU.get(i).getNomeHotel() +
-                        "\nPreço Diária: " + hospedagemEU.get(i).getPrecoDiaria());
+
+
+            hosp[0] = new Hospedagem("Hotel Lotus", "Rua das Palmeiras, 103", dataCheckIn(), dataCheckOut(), 150, 15, servicosHotelLotus);
+            hosp[1] = new Hospedagem("Hotel Savana", "Avenida Principal, 6384", dataCheckIn(), dataCheckOut(), 200, 3, servicosHotelSavana);
+            hosp[2] = new Hospedagem("Hotel Carlton", "Avenida Doutor Hans Chucrute, 257", dataCheckIn(), dataCheckOut(), 300, 8, servicosHotelCarlton);
+
+            hospedagem.addAll(Arrays.asList(hosp).subList(0, 4));
+
+
+            for (int i = 0; i < hospedagem.size(); i++) {
+                System.out.println("Nome do Hotel: " + hospedagem.get(i).getNomeHotel() +
+                        "\nPreço Diária: " + hospedagem.get(i).getPrecoDiario() + "\nServiços: " + hospedagem.get(i).getServicosInclusos());
             }
 
-            System.out.print("Qual deseja escolher?: ");
+            System.out.print("Qual deseja escolher?(Digite o nome do Hotel): ");
             String hotel = sc.next();
             sc.nextLine();
 
-            for (HospedagemEU h : hospedagemEU){
+            for (Hospedagem h : hospedagem){
                 if(h.getNomeHotel().equalsIgnoreCase(hotel)){
                     System.out.println("Nome: " + h.getNomeHotel());
                     System.out.println("Endereço: " + h.getLocalizacao());
-                    System.out.println("Preço total: " + h.calcularPrecoEstadia());
+                    System.out.println("Preço total: " + h.calcularPreco(dias()));
                 }
             }
             System.out.println("Excelente escolha!");
 
-            System.out.println("Vamos as atrações que estão incluídas no pacote!");
+            System.out.println("Vamos as atrações que você pode adquirir!");
 
             ArrayList<Atração> atracoes = new ArrayList<>();
 
             Atração[] at = new Atração[8];
 
             at[0] = new AtraçãoPaga("Pontos Turísticos Premium", "Um passeio incrível por todos os pontos turísticos da cidade!", "8h às 15h", 150, "Ponto Turistico");
-            at[1] = new AtraçãoInclusa("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural");
+            at[1] = new AtraçãoGratuita("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural");
             at[2] = new AtraçãoPaga("Teatros, Concertos e Óperas Premium", "Ingressos para eventos culturais que estão acontecendo na cidade!", "15h às 23h", 200, "Cultural");
             at[3] = new AtraçãoPaga("Restaurantes Premium", "Uma mesa reservada nos 2 melhores restaurantes para você conhecer a culinaria local!", "17h às 23h", 80, "Gastronômico");
-            at[4] = new AtraçãoInclusa("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico");
-            at[5] = new AtraçãoInclusa("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza");
+            at[4] = new AtraçãoGratuita("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico");
+            at[5] = new AtraçãoGratuita("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza");
             at[6] = new AtraçãoPaga("Spa Premium", "Quer algo mais tranquilo pra relaxar? Um dia de spa para voce!", "8h às 21h", 100, "Bem estar");
             at[7] = new AtraçãoPaga("Esportes Radicais Premium", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes");
-            at[8] = new AtraçãoInclusa("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes");
+            at[8] = new AtraçãoGratuita("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes");
 
 
-
-            for (int i = 0; i<8;i++) {
-                atracoes.add(at[i]);
-            }
+            atracoes.addAll(Arrays.asList(at).subList(0, 8));
 
             for (int i = 0; i < atracoes.size(); i++) {
                 System.out.println((i) + atracoes.get(i).getNomeAtracao() +
