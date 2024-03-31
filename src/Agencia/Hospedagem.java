@@ -52,7 +52,7 @@ public class Hospedagem {
 
     //método calcular preço
 
-    public double calcularPreco(int numDias) {
+    public double calcularPreco() {
         return PrecoDiario * numDias;
     }
 

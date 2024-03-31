@@ -178,9 +178,8 @@ public class Principal {
         novaHospedagem();
         novaAtracao();
 
-        if (novoDestino()){
-        } else if (novaHospedagem()) {
-        } else if (novaAtracao()) {
+        if (novoDestino() && novaHospedagem() && novaAtracao()){
+
             System.out.println("Perfeito, vamos revisar sua viagem!");
             //fazer relatorio do que foi escolhido
         }
@@ -188,13 +187,11 @@ public class Principal {
     }
 
 public static boolean novaHospedagem(){
-        Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
 
     System.out.println("Agora vamos escolher qual hotel deseja se hospedar para ter a melhor experiência!");
 
     try {
-
-
         ArrayList<Hospedagem> hospedagem = new ArrayList<>();
         Hospedagem[] hosp = new Hospedagem[3];
         List<String> servicosHotelLotus = new ArrayList<>();
@@ -237,7 +234,7 @@ public static boolean novaHospedagem(){
             if (h.getNomeHotel().equalsIgnoreCase(hotel)) {
                 System.out.println("Nome: " + h.getNomeHotel());
                 System.out.println("Endereço: " + h.getLocalizacao());
-                System.out.println("Preço total: " + h.calcularPreco(dias()));
+                System.out.println("Preço total: " + h.calcularPreco());
             }
         }
         System.out.println("Excelente escolha!");
@@ -317,7 +314,6 @@ public static boolean novaAtracao(){
             }
             System.out.println("-----Preço total das atrações-----");
             System.out.println("R$ :" + precoTotal);
-            System.out.println("Tudo certo? Vamos revisar sua viagem!");
         }
         return true;
     }catch (Exception ex){
@@ -331,18 +327,23 @@ public static boolean novoDestino(){
 
     try {
         ArrayList<Destino> destinos = new ArrayList<>();
-        destinos.add(new Destino("Paris", "Europa", "A cidade do Amor!", "Torre Eiffel, Arco do Triunfo"));
-        destinos.add(new Destino("Los Angeles", "America do Norte", "A cidade da diversão!!", "Hollywood, cassinos!"));
-        destinos.add(new Destino("Lisboa", "Europa", "A cidade histórica!", "Castelo de São Jorge, Praias paradisíacas!"));
-        destinos.add(new Destino("Ottawa", "America do Norte", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!"));
-        destinos.add(new Destino("Atenas", "Europa", "A cidade eterna, repleta de história e arquitetura magnífica.", "Partenon, Acrópole!"));
+        Destino[] dest = new Destino[5];
+
+        dest[0] = new Destino("Paris", "Europa", "A cidade do Amor!", "Torre Eiffel, Arco do Triunfo", 5500);
+        dest[1] = new Destino("Los Angeles", "America do Norte", "A cidade da diversão!!", "Hollywood, cassinos!", 3265.99);
+        dest[2] = new Destino("Lisboa", "Europa", "A cidade histórica!", "Castelo de São Jorge, Praias paradisíacas!", 3899.99);
+        dest[3] = new Destino("Ottawa", "America do Norte", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!", 1879.59);
+        dest[4] = new Destino("Atenas", "Europa", "A cidade eterna, repleta de história e arquitetura magnífica.", "Partenon, Acrópole!", 4689.89);
+
+        destinos.addAll(Arrays.asList(dest).subList(0,5));
 
         dataCheckIn();
         dataCheckOut();
 
         System.out.println("Ótima data! Temos os seguintes destinos disponíveis: ");
-        for (Destino value : destinos) {
-            System.out.println(value.getNome());
+        for (int i = 0; i < destinos.size(); i++) {
+            System.out.println((i) + destinos.get(i).getNome() +
+                    "\nPreço: " + destinos.get(i).getPreco() + "\nDescrição: " + destinos.get(i).getDescricao());
         }
         System.out.print("Qual deseja escolher?: ");
         String destino = sc.next();
@@ -352,6 +353,7 @@ public static boolean novoDestino(){
             if (d.getNome().equalsIgnoreCase(destino)) {
                 System.out.println("Destino: " + d.getNome());
                 System.out.println("Descrição: " + d.getDescricao());
+                System.out.println("Preço: " + d.getPreco());
 
             }
         }

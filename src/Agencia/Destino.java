@@ -5,12 +5,18 @@ public class Destino {
     String localizacao;
     String descricao;
     String pontosTuristicos;
+    private double preco;
 
-    public Destino(String nome, String localizacao, String descricao, String pontosTuristicos) {
+    public Destino(String nome, String localizacao, String descricao, String pontosTuristicos, double preco) {
         this.nome = nome;
         this.localizacao = localizacao;
         this.descricao = descricao;
         this.pontosTuristicos = pontosTuristicos;
+        this.preco = preco;
+    }
+
+    public double getPreco() {
+        return preco;
     }
 
     public String getNome() {
