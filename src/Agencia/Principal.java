@@ -33,8 +33,11 @@ public class Principal {
                     if(loginCliente()){
                         do {
                         System.out.println("=========Menu=========");
-                        System.out.println("1 - Nova Viagem");
-                        System.out.println("2 - Histórico de Viagens");
+                        System.out.println("1 - Nova Viagem(Inclui Passagem, Hospedagem e Atrações)");
+                        System.out.println("3 - Hospedagem");
+                        System.out.println("4 - Atração");
+                        System.out.println("2 - Histórico");
+                        System.out.println("5 - Avaliar");
                         System.out.println("0 - Sair");
                         System.out.print("Opcao: ");
                         op1 = sc.nextInt();
@@ -43,6 +46,16 @@ public class Principal {
                         switch (op1){
                             case 1:
                                 novaViagem();
+                                break;
+                            case 2:
+                                novaHospedagem();
+                                break;
+                            case 3:
+                                novaAtracao();
+                                break;
+                            case 4:
+                                break;
+                            case 5:
                                 break;
                         }
                     }while (op1 != 0);
@@ -365,8 +378,38 @@ public static boolean novoDestino(){
         sc.nextLine();
         return false;
     }
-
 }
+
+public static boolean avaliacao(){
+    System.out.println("Bem vindo(a) a nossa área de avaliação!");
+    int op;
+    Scanner sc = new Scanner(System.in);
+
+    do {
+        System.out.println("O que deseja avaliar?");
+        System.out.println("1 - Destino");
+        System.out.println("2 - Hospedagem");
+        System.out.println("3 - Atrações");
+        System.out.println("0 - Sair");
+        System.out.print("Opcao: ");
+        op = sc.nextInt();
+
+        switch (op){
+            case 1:
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
+
+    }while(op != 0);
+
+
+    return true;
+}
+
 
 }
 
