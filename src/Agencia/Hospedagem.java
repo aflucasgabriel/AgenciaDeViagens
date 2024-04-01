@@ -16,7 +16,7 @@ public class Hospedagem {
     private List<String> avaliacoes;
     private LocalDate dataInicial;
     private LocalDate dataFinal;
-    int numDias;
+    private int numDias;
     private double PrecoDiario;
 
 
@@ -76,7 +76,7 @@ public class Hospedagem {
         return b;
     }
 
-    public void relatotioAvaliacao(String avaliacao){
+    public void relatorioAvaliacao(String avaliacao){
         avaliacoes.add(avaliacao);
     }
 

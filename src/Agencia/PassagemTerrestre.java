@@ -1,6 +1,8 @@
 package Agencia;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PassagemTerrestre extends Passagem{
@@ -10,6 +12,7 @@ public class PassagemTerrestre extends Passagem{
     public int numRota;
     private int numAssento;
     private int quantAssentos = 0;
+    private List<String> avaliacoes;
 
     public PassagemTerrestre(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco, String companhia, int numAssento) {
         super(origem, destino, dataIda, dataVolta, preco);
@@ -17,6 +20,7 @@ public class PassagemTerrestre extends Passagem{
         this.numAssento = numAssento;
         this.numRota = r.nextInt(1000, 8000);
         this.quantAssentos++;
+        this.avaliacoes = new ArrayList<>();
     }
 
     @Override
@@ -54,9 +58,15 @@ public class PassagemTerrestre extends Passagem{
     public void cancelarVoo(){
         super.setPreco(0.0);
     }
+
+    @Override
+    public void relatorioAvaliacao(String avaliacao){
+        avaliacoes.add(avaliacao);
+    }
+
     public void relatorio(){
 
-        System.out.println("Companhia Aera: " + companhiaAerea);
+        System.out.println("Companhia Aera: " + companhia);
         System.out.println("Origem: " + getOrigem());
         System.out.println("Destino: " + getDestino());
         System.out.println("Numero Assento = " + numAssento);

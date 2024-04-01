@@ -66,17 +66,10 @@ public class Principal {
                     break;
                 case 2:
                     cadastraCliente();
-
                     break;
             }
 
         }while(op != 0);
-
-
-
-
-
-
 
     }
 

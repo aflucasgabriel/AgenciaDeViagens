@@ -1,6 +1,8 @@
 package Agencia;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Passagem {
 
@@ -9,6 +11,7 @@ public abstract class Passagem {
     private LocalDate dataIda;
     private LocalDate dataVolta;
     private double preco;
+
 
     public Passagem(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco) {
         this.origem = origem;
@@ -64,5 +67,6 @@ public abstract class Passagem {
     public abstract void relatorio();
 
     public abstract double calculaTarifa();
+    public abstract void relatorioAvaliacao(String avaliacao);
 
 }

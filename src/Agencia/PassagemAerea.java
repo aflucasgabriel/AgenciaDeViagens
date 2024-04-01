@@ -1,7 +1,9 @@
 package Agencia;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Random;
 
 public class PassagemAerea extends Passagem{
@@ -12,6 +14,7 @@ public class PassagemAerea extends Passagem{
     private int numVoo;
     private int numAssento;
     private int quantAssentos = 0;
+    private List<String> avaliacoes;
 
     public PassagemAerea(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco, String companhiaAerea, String classe, int numAssento) {
         super(origem, destino, dataIda, dataVolta, preco);
@@ -20,6 +23,7 @@ public class PassagemAerea extends Passagem{
         this.numVoo = r.nextInt(1000 ,8000);
         this.numAssento = numAssento;
         this.quantAssentos++;
+        this.avaliacoes = new ArrayList<>();
 
     }
 
@@ -72,6 +76,13 @@ public class PassagemAerea extends Passagem{
     public void cancelarVoo(){
         super.setPreco(0.0);
     }
+
+    @Override
+    public void relatorioAvaliacao(String avaliacao){
+        avaliacoes.add(avaliacao);
+    }
+
+
     public void relatorio(){
 
         System.out.println("Companhia Aera: " + companhiaAerea);
