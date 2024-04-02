@@ -11,9 +11,12 @@ public class Cliente {
     private String nome;
     private String email;
     private String senha;
+    private Destino destinoEscolhido;
     private LocalDate dataNascimento;
     private ArrayList <Viagem> historicoViagens;
     private ArrayList <PreferenciaViagem> preferenciasViagens;
+    private static Cliente clienteLogado;
+
 
     public Cliente(String nome, String email, String senha, LocalDate dataNascimento) {
         this.nome = nome;
@@ -62,7 +65,36 @@ public class Cliente {
         return preferenciasViagens;
     }
 
+    public static void setClienteLogado(Cliente cliente) {
+        clienteLogado = cliente;
+    }
+
+    // Método para obter o cliente logado
+    public static Cliente getClienteLogado() {
+        return clienteLogado;
+    }
+
+
+
+
 //GET E SET
+
+
+    public Destino getDestinoEscolhido() {
+        return destinoEscolhido;
+    }
+
+    public void setDestinoEscolhido(Destino destinoEscolhido) {
+        this.destinoEscolhido = destinoEscolhido;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
 
     public String getNome() {
         return nome;

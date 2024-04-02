@@ -5,11 +5,11 @@ public class Atracao {
     private String nomeAtracao;
     private String descricao;
     private String horario;
-    private float preco;
+    private double preco;
     private String tipo;
     private int lotacao;
 
-    public Atracao(String nomeAtracao, String descricao, String horario, float preco, String tipo, Destino destino) {
+    public Atracao(String nomeAtracao, String descricao, String horario, double preco, String tipo, Destino destino) {
         this.nomeAtracao = nomeAtracao;
         this.descricao = descricao;
         this.horario = horario;
@@ -31,11 +31,11 @@ public class Atracao {
         return horario;
     }
 
-    public float getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(float preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 

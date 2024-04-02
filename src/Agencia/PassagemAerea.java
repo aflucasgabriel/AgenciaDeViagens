@@ -17,7 +17,7 @@ public class PassagemAerea extends Passagem{
     private List<String> avaliacoes;
 
     public PassagemAerea(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco, String companhiaAerea, String classe, int numAssento) {
-        super(origem, destino, dataIda, dataVolta, preco);
+        super(origem, destino, dataIda, dataVolta);
         this.companhiaAerea = companhiaAerea;
         this.classe = classe;
         this.numVoo = r.nextInt(1000 ,8000);

@@ -15,7 +15,7 @@ public class PassagemTerrestre extends Passagem{
     private List<String> avaliacoes;
 
     public PassagemTerrestre(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco, String companhia, int numAssento) {
-        super(origem, destino, dataIda, dataVolta, preco);
+        super(origem, destino, dataIda, dataVolta);
         this.companhia = companhia;
         this.numAssento = numAssento;
         this.numRota = r.nextInt(1000, 8000);

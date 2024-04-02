@@ -13,12 +13,12 @@ public abstract class Passagem {
     private double preco;
 
 
-    public Passagem(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco) {
+    public Passagem(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta) {
         this.origem = origem;
         this.destino = destino;
         this.dataIda = dataIda;
         this.dataVolta = dataVolta;
-        this.preco = preco;
+        this.preco = destino.getPreco();
     }
 
     public String getOrigem() {
