@@ -3,10 +3,7 @@ package Agencia;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -15,6 +12,7 @@ import java.io.IOException;
 
 public class Principal {
     public static void main(String[] args) {
+        ArrayList<Cliente> cl = new ArrayList<>();
 
         Scanner sc = new Scanner(System.in);
         int op = 0, op1 = 0, op2 = 0;
@@ -73,80 +71,70 @@ public class Principal {
 
     }
 
-    public static boolean cadastraCliente(){
+    public static boolean cadastraCliente(ArrayList<Cliente> cl){
 
         Scanner sc = new Scanner(System.in);
 
         try {
+            ArrayList<Cliente> cl = new ArrayList<>();
             System.out.print("Digite seu nome completo: ");
             String nome = sc.next();
             System.out.print("Digite sua data de nascimento (dd/MM/yyyy): ");
-            String dataNasc = sc.next();
+            String data = sc.next();
+            DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataNasc = LocalDate.parse(data, formatar);
+
             System.out.print("Digite seu email: ");
             String email = sc.next();
             System.out.print("Digite sua senha: ");
             String senha = sc.next();
 
-
             System.out.println("Obrigado!");
 
-            String print = nome + ";" + email + ";" + senha + ";" + dataNasc;
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Clientes.txt"))) {
-                writer.write(print);
-            } catch (IOException e) {
-                System.err.println("Erro ao escrever no arquivo: " + e.getMessage());
-            }
+            Cliente cliente = new Cliente(nome, email, senha, dataNasc);
+            cl.add(cliente);
 
             return true;
-        }catch (Exception ex){
-            System.out.println("ERRO! TENTE NOVAMENTE");
-            sc.nextLine();
+        } catch (InputMismatchException ex) {
+            System.out.println("Erro ao inserir dados! Tente novamente!");
+            sc.next();
             return false;
         }
+
     }
 
-    public static boolean loginCliente(){
+    public static boolean loginCliente(ArrayList<Cliente> cl){
         Scanner sc = new Scanner(System.in);
 
         try {
-        System.out.print("Digite seu email: ");
-        String email = sc.next();
-        System.out.print("Digite sua senha: ");
-        String senha = sc.next();
+            System.out.print("Digite seu email: ");
+            String email = sc.next();
+            System.out.print("Digite sua senha: ");
+            String senha = sc.next();
 
-        if(verificaCredencias(email, senha)){
-            System.out.println("Login Efetuado!");
-            return true;
-        }
-        }catch (Exception e){
-            System.out.println("ERRO! TENTE NOVAMENTE");
+            if (verificaCredenciais(email, senha, cl)) {
+                System.out.println("Login Efetuado!");
+                return true;
+            }else {
+                throw new IllegalArgumentException("Email ou senha incorretos!");
+            }
+        }catch (IllegalArgumentException e) {
+            System.out.println("ERRO! Email ou senha incorretos!" + e.getMessage());
             sc.nextLine();
             return false;
         }
-
-
-        return false;
-
     }
 
-    public static boolean verificaCredencias(String email, String senha) {
 
-        try (BufferedReader br = new BufferedReader(new FileReader("Clientes.txt"))) {
-            String linha; // usada para armazenar cada linha lida
-            while ((linha = br.readLine()) != null) {//le cada linha do arquivo até que nao haja mais linhas
-                String[] partes = linha.split(";"); //le até o ";" e armazena em uma array chamadas partes
-                String emailSalvo = partes[1]; // salva a segunda parte na string que é o email
-                String senhaSalva = partes[2]; // salva a terceira parte na string que é a senha
-                if (email.equals(emailSalvo) && senha.equals(senhaSalva)) {
-                    return true;
-                }
+    public static boolean verificaCredenciais(String email, String senha, ArrayList<Cliente> clientes) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getEmail().equals(email) && cliente.getSenha().equals(senha)) {
+                return true;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return false;
     }
+
 
     public static LocalDate dataCheckIn(){
         Scanner sc = new Scanner(System.in);

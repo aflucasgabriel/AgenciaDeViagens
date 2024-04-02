@@ -1,6 +1,7 @@
 package Agencia;
 
 public class Atracao {
+    private Destino destino;
     private String nomeAtracao;
     private String descricao;
     private String horario;
@@ -8,12 +9,13 @@ public class Atracao {
     private String tipo;
     private int lotacao;
 
-    public Atracao(String nomeAtracao, String descricao, String horario, float preco, String tipo) {
+    public Atracao(String nomeAtracao, String descricao, String horario, float preco, String tipo, Destino destino) {
         this.nomeAtracao = nomeAtracao;
         this.descricao = descricao;
         this.horario = horario;
         this.preco = preco;
         this.tipo = tipo;
+        this.destino = destino;
         this.lotacao++;
     }
 
