@@ -1,6 +1,7 @@
 package Agencia;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Produto {
@@ -8,20 +9,19 @@ public class Produto {
     private Passagem passagem;
     private Destino destino;
     private Hospedagem hospedagem;
-    private Atracao atracao;
+    public ArrayList<Atracao> atracao;
     private int id;
     private String nome;
     private String descricao;
     private double preco;
-    private TipoProduto tipo;
 
 
-    public Produto(String nome, String descricao, double preco, Passagem passagem, Hospedagem hospedagem, Atracao atracao) {
+
+    public Produto(String nome, String descricao, Passagem passagem, Hospedagem hospedagem, ArrayList<Atracao> atracao) {
         this.id = r.nextInt(100, 1000);
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
-        this.tipo = tipo;
         this.passagem = passagem;
         this.hospedagem = hospedagem;
         this.atracao = atracao;
@@ -51,11 +51,11 @@ public class Produto {
         this.hospedagem = hospedagem;
     }
 
-    public Atracao getAtracao() {
+    public ArrayList<Atracao> getAtracao() {
         return atracao;
     }
 
-    public void setAtracao(Atracao atracao) {
+    public void setAtracao(ArrayList<Atracao> atracao) {
         this.atracao = atracao;
     }
 
@@ -83,31 +83,41 @@ public class Produto {
         this.preco = preco;
     }
 
-    public TipoProduto getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoProduto tipo) {
-        this.tipo = tipo;
-    }
-
 
     public double calculaPreco() {
-
         double total = 0;
-        total = atracao.getPreco() + passagem.getPreco() + destino.getPreco() + hospedagem.calcularPreco();
+
+        if (passagem == null) {
+            passagem.setPreco(0);
+        } else {
+            total += passagem.getPreco();
+        }
+
+        if (hospedagem == null) {
+            hospedagem.setPrecoDiario(0);
+        } else {
+            total += hospedagem.calcularPreco();
+        }
+
+        if (atracao != null) {
+            for (Atracao a : atracao) {
+                if (a != null) {
+                    total += a.getPreco();
+                }
+            }
+        }
+
         return total;
-
-
     }
+
 
 
     public String relatorio() {
         return "Id=" + id +
                 "\nNome='" + nome +
                 "\nDescricao='" + descricao +
-                "\nPreco=" + preco +
-                "\nTipo=" + tipo;
+                "\nPreco=" + calculaPreco();
+
 
     }
 

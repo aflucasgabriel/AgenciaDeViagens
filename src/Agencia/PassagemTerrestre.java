@@ -70,15 +70,18 @@ public class PassagemTerrestre extends Passagem{
         avaliacoes.add(avaliacao);
     }
 
-    public void relatorio(){
+    @Override
+    public String relatorioPassagem(){
 
-        System.out.println("Companhia Aera: " + companhia);
-        System.out.println("Origem: " + getOrigem());
-        System.out.println("Destino: " + getDestino());
-        System.out.println("Numero Assento = " + numAssento);
-        System.out.println("Data Ida: " + getDataIda());
-        System.out.println("Data Volta: " + getDataVolta());
-        System.out.println("Preço Passagem + Tarifas: R$" + getPreco());
+        String relatorio = "Companhia Aera: " + companhia +
+                "\nOrigem: " + getOrigem() +
+                "\nDestino: " + getDestino() +
+                "\nNumero Assento = " + numAssento +
+                "\nData Ida: " + getDataIda() +
+                "\nData Volta: " + getDataVolta() +
+                "\nPreço Passagem + Tarifas: R$" + getPreco();
+
+        return relatorio;
 
     }
 }

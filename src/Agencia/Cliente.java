@@ -14,7 +14,7 @@ public class Cliente {
     private Destino destinoEscolhido;
     private Passagem passagemEscolhida;
     private Hospedagem hospedagemEscolhida;
-    private Atracao atracaoEscolhida;
+    private ArrayList<Atracao> atracaosEscolhidas;
     private LocalDate dataNascimento;
     private ArrayList <Viagem> historicoViagens;
     private ArrayList <PreferenciaViagem> preferenciasViagens;
@@ -30,31 +30,7 @@ public class Cliente {
         this.preferenciasViagens = new ArrayList<>();
     }
 
-    /*
 
-    public void editar(String novoNome,String novaSenha, List<Viagem> novohistoricoViagens, List<String> novaspreferenciadViagens){
-        this.nome = novoNome;
-        this.senha= novaSenha;
-        this.historicoViagens = novohistoricoViagens;
-        this.preferenciasViagens = novaspreferenciadViagens;
-    }
-*/
-    /*
-    public void relatorioViagens() {
-        System.out.println("Histórico de viagens do cliente " + nome + ":");
-        for (Viagem viagem : historicoViagens) {
-            System.out.println("Data: " + viagem.getData());
-            System.out.println("Destino: " + viagem.getDestino());
-            System.out.println("Hospedagem: " + viagem.getHospedagem().getNomehotel());
-            System.out.println("Atrações:");
-            for (String atrações : viagem.getAtrações()) {
-                System.out.println("- " + atrações);
-            }
-            System.out.println("Feedback: " + viagem.getFeedback());
-            System.out.println();
-        }
-    }
-*/
 
     public void adicionarPreferenciaViagem(PreferenciaViagem preferencia) {
         preferenciasViagens.add(preferencia);
@@ -77,11 +53,25 @@ public class Cliente {
         return clienteLogado;
     }
 
+    public String relatorio(){
+
+        String x = getAtracaosEscolhidas().toString() + getHospedagemEscolhida().relatorioHospedagem() + getPassagemEscolhida().relatorioPassagem();
+
+        return x;
+    }
 
 
 
 //GET E SET
 
+
+    public ArrayList<Atracao> getAtracaosEscolhidas() {
+        return atracaosEscolhidas;
+    }
+
+    public void setAtracaosEscolhidas(ArrayList<Atracao> atracaosEscolhidas) {
+        this.atracaosEscolhidas = atracaosEscolhidas;
+    }
 
     public Passagem getPassagemEscolhida() {
         return passagemEscolhida;
@@ -99,13 +89,7 @@ public class Cliente {
         this.hospedagemEscolhida = hospedagemEscolhida;
     }
 
-    public Atracao getAtracaoEscolhida() {
-        return atracaoEscolhida;
-    }
 
-    public void setAtracaoEscolhida(Atracao atracaoEscolhida) {
-        this.atracaoEscolhida = atracaoEscolhida;
-    }
 
     public Destino getDestinoEscolhido() {
         return destinoEscolhido;

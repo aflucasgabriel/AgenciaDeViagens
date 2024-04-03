@@ -59,4 +59,14 @@ public class Destino {
         avaliacoes.add(avaliacao);
     }
 
+    public String relatorioDestino(){
+        String relatorio = "\nNome: " + nome +
+                "\nLocalização: " + localizacao +
+                "\nDescrição: " + descricao +
+                "\nPontos Turísticos" + pontosTuristicos +
+                "\nPreço: R%" + preco;
+
+        return relatorio;
+    }
+
 }

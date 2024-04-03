@@ -33,6 +33,14 @@ public class Hospedagem{
         this.PrecoDiario = PrecoDiario;
     }
 
+    public int getNumDias() {
+        return numDias;
+    }
+
+    public void setNumDias(int numDias) {
+        this.numDias = numDias;
+    }
+
     public int getQuartosDisponiveis() {
         return QuartosDisponiveis;
     }
@@ -44,6 +52,7 @@ public class Hospedagem{
     public void setServicosInclusos(List<String> servicosInclusos) {
         this.servicosInclusos = servicosInclusos;
     }
+
 
     public String getNomeHotel() {
         return nomeHotel;
@@ -61,11 +70,13 @@ public class Hospedagem{
         return PrecoDiario;
     }
 
-
+    public void setPrecoDiario(double precoDiario) {
+        PrecoDiario = precoDiario;
+    }
     //método calcular preço
 
-    public double calcularPreco(int numDias) {
-        return PrecoDiario * numDias;
+    public double calcularPreco() {
+        return PrecoDiario * getNumDias();
     }
 
     //método reservar 
@@ -92,16 +103,17 @@ public class Hospedagem{
         avaliacoes.add(avaliacao);
     }
 
-    public void relatorio(){
-        System.out.println("Nome do Hotel: " + nomeHotel);
-        System.out.println("Localizacao: " + localizacao);
-        System.out.println("Numero de pessoas por quarto: " + NumPessoasQuarto);
-        System.out.println("Quartos Disponíveis: "+ QuartosDisponiveis);
-        System.out.println("Servicos inclusos: " +servicosInclusos);
-        System.out.println("Avaliaçoes: " +avaliacoes);
-        System.out.println("Data inicial: "+dataInicial);
-        System.out.println("Data Final: " +dataFinal);
-        System.out.println("Preco diario:" + PrecoDiario);
+    public String relatorioHospedagem(){
+        String relatorio = "\nNome do Hotel: " + nomeHotel+
+        "\nLocalizacao: " + localizacao+
+        "\nServicos inclusos: " +servicosInclusos+
+        "\nAvaliaçoes: " +avaliacoes+
+        "\nData inicial: "+dataInicial+
+        "\nData Final: " +dataFinal+
+        "\nPreco diario:" + PrecoDiario;
+
+        return relatorio;
+
     }
 
 

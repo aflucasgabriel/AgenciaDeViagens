@@ -75,9 +75,8 @@ public abstract class Passagem {
     public abstract void calculaPreco();
     public abstract boolean verificaDisponibilidade();
 
-    public abstract void relatorio();
-
     public abstract double calculaTarifa();
     public abstract void relatorioAvaliacao(String avaliacao);
+    public abstract String relatorioPassagem();
 
 }

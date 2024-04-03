@@ -19,6 +19,7 @@ public class Principal {
         ArrayList<Atracao> atracao = new ArrayList<>();
 
 
+        Hospedagem[] hosp = new Hospedagem[3];
         PassagemTerrestre passagemT;
         PassagemAerea passagemA;
         double tarifaFixa = 1.5;
@@ -42,9 +43,9 @@ public class Principal {
                         do {
                             System.out.println("=========Menu=========");
                             System.out.println("1 - Nova Viagem(Inclui Passagem, Hospedagem e Atrações)");
-                            System.out.println("3 - Hospedagem");
-                            System.out.println("4 - Atração");
-                            System.out.println("2 - Histórico");
+                            System.out.println("2 - Hospedagem");
+                            System.out.println("3 - Atração");
+                            System.out.println("4 - Histórico");
                             System.out.println("5 - Avaliar");
                             System.out.println("0 - Sair");
                             System.out.print("Opcao: ");
@@ -252,7 +253,7 @@ public class Principal {
                                     servicosHotelCarlton.add("Almoço e Janta");
                                     servicosHotelCarlton.add("Estacionamento");
 
-                                    Hospedagem[] hosp = new Hospedagem[3];
+                                    hosp = new Hospedagem[3];
                                     hosp[0] = new Hospedagem("Lotus", "Rua das Palmeiras, 103", dataCheckIn(), dataCheckOut(), 150, 15, servicosHotelLotus);
                                     hosp[1] = new Hospedagem("Savana", "Avenida Principal, 6384", dataCheckIn(), dataCheckOut(), 200, 3, servicosHotelSavana);
                                     hosp[2] = new Hospedagem("Carlton", "Avenida Doutor Hans Chucrute, 257", dataCheckIn(), dataCheckOut(), 300, 8, servicosHotelCarlton);
@@ -267,7 +268,7 @@ public class Principal {
                                     String hotel = sc.next();
                                     sc.nextLine();
 
-                                    for (int i = 0; i < dest.length; i++) {
+                                    for (int i = 0; i < hosp.length; i++) {
                                         if (hosp[i].getNomeHotel().equalsIgnoreCase(hotel)) {
                                             System.out.println("Destino: " + hosp[i].getNomeHotel());
                                             System.out.println("Endereço: " + hosp[i].getLocalizacao());
@@ -280,26 +281,305 @@ public class Principal {
                                         //Produto produto = new Produto("Hospedagem", "Reserva de hospedagem de hotel", h.calcularPreco(), Produto.TipoProduto.HOSPEDAGEM);
                                         //System.out.println("Produto criado: " + produto);
                                     }
-                                    double total = obterClienteLogado().getHospedagemEscolhida().calcularPreco(dias());
+                                    obterClienteLogado().getHospedagemEscolhida().setNumDias(dias());
+                                    double total = obterClienteLogado().getHospedagemEscolhida().calcularPreco();
                                     Hospedagem hosped = new Hospedagem(obterClienteLogado().getHospedagemEscolhida().getNomeHotel(), obterClienteLogado().getHospedagemEscolhida().getLocalizacao(), dataIda, dataVolta, obterClienteLogado().getHospedagemEscolhida().getPrecoDiario(), obterClienteLogado().getHospedagemEscolhida().getQuartosDisponiveis(), obterClienteLogado().getHospedagemEscolhida().getServicosInclusos());
                                     hospedagem.add(hosped);
                                     System.out.println("Total da Hospedagem: R$" + total);
 
                                     System.out.println("Excelente escolha!");
-                                    System.out.println("Para finalizar, iremos escolher algumas atrações!");
 
+                                    System.out.print("Deseja incluir atrações na sua viagem?\nTemos atrações como museus, restaurantes, cachoeiras etc(sim/nao): ");
+                                    String escolhaAtracao = sc.nextLine();
+                                    sc.nextLine();
+
+                                    if (escolhaAtracao.equals("sim")) {
+
+                                        System.out.println("Vamos às atrações que você pode adquirir!");
+
+                                        ArrayList<Atracao> atracoes = new ArrayList<>();
+
+                                        Atracao[] at = new Atracao[9];
+
+                                        at[0] = new AtracaoPaga("Pontos Turísticos Premium", "Um passeio incrível por todos os pontos turísticos da cidade!", "8h às 15h", 150, "Ponto Turistico", obterClienteLogado().getDestinoEscolhido());
+                                        at[1] = new AtracaoGratuita("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural", obterClienteLogado().getDestinoEscolhido());
+                                        at[2] = new AtracaoPaga("Teatros, Concertos e Óperas Premium", "Ingressos para eventos culturais que estão acontecendo na cidade!", "15h às 23h", 200, "Cultural", obterClienteLogado().getDestinoEscolhido());
+                                        at[3] = new AtracaoPaga("Restaurantes Premium", "Uma mesa reservada nos 2 melhores restaurantes para você conhecer a culinária local!", "17h às 23h", 80, "Gastronômico", obterClienteLogado().getDestinoEscolhido());
+                                        at[4] = new AtracaoGratuita("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico", obterClienteLogado().getDestinoEscolhido());
+                                        at[5] = new AtracaoGratuita("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza", obterClienteLogado().getDestinoEscolhido());
+                                        at[6] = new AtracaoPaga("Spa Premium", "Quer algo mais tranquilo pra relaxar? Um dia de spa para você!", "8h às 21h", 100, "Bem estar", obterClienteLogado().getDestinoEscolhido());
+                                        at[7] = new AtracaoPaga("Esportes Radicais Premium", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes", obterClienteLogado().getDestinoEscolhido());
+                                        at[8] = new AtracaoGratuita("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes", obterClienteLogado().getDestinoEscolhido());
+
+
+                                        for (int i = 0; i < at.length; i++) {
+                                            if (at[i] instanceof AtracaoGratuita) {
+                                                System.out.println("Essas são as Atrações Gratuitas que você tem direito!");
+                                                System.out.println("Nome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
+                                                        "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
+                                            } else {
+                                                System.out.println("Essas são as Atrações Pagas que você pode escolher!");
+                                                System.out.println("Nome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
+                                                        "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
+                                            }
+                                            atracoes.add(at[i]);
+                                        }
+
+                                        int indiceEscolhido;
+                                        String resposta;
+                                        ArrayList<Atracao> atracoesEscolhidas = new ArrayList<>();
+                                        do {
+                                            System.out.print("Qual deseja escolher (digite o número do índice ou 'sair' para terminar)?: ");
+                                            resposta = sc.nextLine();
+
+                                            try {
+                                                if (resposta.equalsIgnoreCase("sair")) {
+                                                    break;
+                                                }
+                                                indiceEscolhido = Integer.parseInt(resposta);
+                                                if (indiceEscolhido >= 0 && indiceEscolhido < at.length) {
+                                                    Atracao atracaoEscolhida = atracoes.get(indiceEscolhido);
+                                                    if (atracaoEscolhida.verificarDisponibilidade()) {
+                                                        atracoesEscolhidas.add(atracaoEscolhida);
+                                                    }else{
+                                                        System.out.println("Desculpe, Atração Indisponível!");
+                                                    }
+                                                } else {
+                                                    System.out.println("Índice inválido. Por favor, digite um número de índice válido.");
+                                                }
+                                            } catch (NumberFormatException e) {
+                                                System.out.println("Entrada inválida. Por favor, digite um número de índice ou 'sair' para terminar.");
+                                            }
+                                        } while (!resposta.equalsIgnoreCase("sair"));
+
+                                        double precoTotal = 0.0;
+                                        for (Atracao a : atracoesEscolhidas) {
+                                            precoTotal += a.getPreco();
+                                        }
+                                        for (Atracao a : atracoesEscolhidas) {
+                                            System.out.println("Nome: " + a.getNomeAtracao());
+                                            System.out.println("Horário: " + a.getHorario());
+                                            System.out.println("Preço: " + a.getPreco());
+                                            System.out.println();
+                                        }
+                                        System.out.println("-----Preço total das atrações-----");
+                                        System.out.println("R$ :" + precoTotal);
+
+                                        obterClienteLogado().setAtracaosEscolhidas(atracoesEscolhidas);
+                                    }
+
+                                    System.out.println("Perfeito! \nCompra finalizada!\nVamos revisar seu pedido!");
+                                    Produto produto = new Produto("Pacote de Viagem", "Escolha de Passagem, Hospedagem e Atrações para uma viagem!", obterClienteLogado().getPassagemEscolhida(), obterClienteLogado().getHospedagemEscolhida(), obterClienteLogado().getAtracaosEscolhidas());
+                                    obterClienteLogado().getDestinoEscolhido().relatorioDestino();
+                                    obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
+                                    obterClienteLogado().getPassagemEscolhida().relatorioPassagem();
+                                    for (Atracao a : atracao){
+                                        a.relatorioAtracao();
+                                    }
+
+                                    Viagem viagem = new Viagem(obterClienteLogado(), produto);
+
+                                    System.out.println("Obrigado por comprar com a gente! Volte Sempre!!");
 
                                     break;
 
                                 case 2:
-                                    novaHospedagem();
+
+                                    System.out.println("Perfeito! Vamos escolher sua hospedagem");
+                                    LocalDate dataIdaH = dataCheckIn();
+                                    LocalDate dataVoltaH = dataCheckOut();
+
+                                    List<String> hotelLotus = new ArrayList<>();
+                                    hotelLotus.add("Wi-Fi");
+                                    hotelLotus.add("Café da manhã");
+
+                                    List<String> hotelSavana = new ArrayList<>();
+                                    hotelSavana.add("Wi-Fi");
+                                    hotelSavana.add("Café da manhã");
+                                    hotelSavana.add("Piscina");
+                                    hotelSavana.add("Almoço e Janta");
+
+                                    List<String> hotelCarlton = new ArrayList<>();
+                                    hotelCarlton.add("Wi-Fi");
+                                    hotelCarlton.add("Café da manhã");
+                                    hotelCarlton.add("Piscina");
+                                    hotelCarlton.add("Academia");
+                                    hotelCarlton.add("Almoço e Janta");
+                                    hotelCarlton.add("Estacionamento");
+
+                                    hosp[0] = new Hospedagem("Lotus", "Rua das Palmeiras, 103", dataCheckIn(), dataCheckOut(), 150, 15, hotelLotus);
+                                    hosp[1] = new Hospedagem("Savana", "Avenida Principal, 6384", dataCheckIn(), dataCheckOut(), 200, 3, hotelSavana);
+                                    hosp[2] = new Hospedagem("Carlton", "Avenida Doutor Hans Chucrute, 257", dataCheckIn(), dataCheckOut(), 300, 8, hotelCarlton);
+
+
+                                    for (int i = 0; i < hosp.length; i++) {
+                                        System.out.println("Nome do Hotel: " + hosp[i].getNomeHotel() +
+                                                "\nPreço Diária: " + hosp[i].getPrecoDiario() + "\nServiços: " + hosp[i].getServicosInclusos());
+                                    }
+
+                                    System.out.print("Qual deseja escolher?(Digite o nome do Hotel): ");
+                                    String hotelh = sc.next();
+                                    sc.nextLine();
+
+                                    for (int i = 0; i < hosp.length; i++) {
+                                        if (hosp[i].getNomeHotel().equalsIgnoreCase(hotelh)) {
+                                            System.out.println("Destino: " + hosp[i].getNomeHotel());
+                                            System.out.println("Endereço: " + hosp[i].getLocalizacao());
+                                            System.out.println("Preço: " + hosp[i].getPrecoDiario());
+
+                                        }
+                                        obterClienteLogado().setHospedagemEscolhida(hosp[i]);
+
+                                    }
+                                    obterClienteLogado().getHospedagemEscolhida().setNumDias(dias());
+                                    double totalA = obterClienteLogado().getHospedagemEscolhida().calcularPreco();
+                                    Hospedagem hospeda = new Hospedagem(obterClienteLogado().getHospedagemEscolhida().getNomeHotel(), obterClienteLogado().getHospedagemEscolhida().getLocalizacao(), dataIdaH, dataVoltaH, obterClienteLogado().getHospedagemEscolhida().getPrecoDiario(), obterClienteLogado().getHospedagemEscolhida().getQuartosDisponiveis(), obterClienteLogado().getHospedagemEscolhida().getServicosInclusos());
+                                    hospedagem.add(hospeda);
+                                    System.out.println("Total da Hospedagem: R$" + totalA);
+
+                                    Produto produtoHosp = new Produto("Hospedagem", "Escolha de uma hospedagem", null, obterClienteLogado().getHospedagemEscolhida(), null);
+                                    Viagem vHosp = new Viagem(obterClienteLogado(), produtoHosp);
+
+                                    obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
+
+                                    System.out.println("\nExcelente escolha! Volte sempre!");
                                     break;
                                 case 3:
-                                    novaAtracao();
+                                    System.out.println("Vamos às atrações que você pode adquirir!");
+
+                                    ArrayList<Atracao> atracoes = new ArrayList<>();
+
+                                    Atracao[] at = new Atracao[9];
+
+                                    at[0] = new AtracaoPaga("Pontos Turísticos Premium", "Um passeio incrível por todos os pontos turísticos da cidade!", "8h às 15h", 150, "Ponto Turistico", obterClienteLogado().getDestinoEscolhido());
+                                    at[1] = new AtracaoGratuita("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural", obterClienteLogado().getDestinoEscolhido());
+                                    at[2] = new AtracaoPaga("Teatros, Concertos e Óperas Premium", "Ingressos para eventos culturais que estão acontecendo na cidade!", "15h às 23h", 200, "Cultural", obterClienteLogado().getDestinoEscolhido());
+                                    at[3] = new AtracaoPaga("Restaurantes Premium", "Uma mesa reservada nos 2 melhores restaurantes para você conhecer a culinária local!", "17h às 23h", 80, "Gastronômico", obterClienteLogado().getDestinoEscolhido());
+                                    at[4] = new AtracaoGratuita("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico", obterClienteLogado().getDestinoEscolhido());
+                                    at[5] = new AtracaoGratuita("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza", obterClienteLogado().getDestinoEscolhido());
+                                    at[6] = new AtracaoPaga("Spa Premium", "Quer algo mais tranquilo pra relaxar? Um dia de spa para você!", "8h às 21h", 100, "Bem estar", obterClienteLogado().getDestinoEscolhido());
+                                    at[7] = new AtracaoPaga("Esportes Radicais Premium", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes", obterClienteLogado().getDestinoEscolhido());
+                                    at[8] = new AtracaoGratuita("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes", obterClienteLogado().getDestinoEscolhido());
+
+
+                                    for (int i = 0; i < at.length; i++) {
+                                        if (at[i] instanceof AtracaoGratuita) {
+                                            System.out.println("Essas são as Atrações Gratuitas que você tem direito!");
+                                            System.out.println("Nome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
+                                                    "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
+                                        } else {
+                                            System.out.println("Essas são as Atrações Pagas que você pode escolher!");
+                                            System.out.println("Nome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
+                                                    "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
+                                        }
+                                        atracoes.add(at[i]);
+                                    }
+
+                                    int indiceEscolhido;
+                                    String resposta;
+                                    ArrayList<Atracao> atracoesEscolhidas = new ArrayList<>();
+                                    do {
+                                        System.out.print("Qual deseja escolher (digite o número do índice ou 'sair' para terminar)?: ");
+                                        resposta = sc.nextLine();
+
+                                        try {
+                                            if (resposta.equalsIgnoreCase("sair")) {
+                                                break;
+                                            }
+                                            indiceEscolhido = Integer.parseInt(resposta);
+                                            if (indiceEscolhido >= 0 && indiceEscolhido < at.length) {
+                                                Atracao atracaoEscolhida = atracoes.get(indiceEscolhido);
+                                                if (atracaoEscolhida.verificarDisponibilidade()) {
+                                                    atracoesEscolhidas.add(atracaoEscolhida);
+                                                }else{
+                                                    System.out.println("Desculpe, Atração Indisponível!");
+                                                }
+                                            } else {
+                                                System.out.println("Índice inválido. Por favor, digite um número de índice válido.");
+                                            }
+                                        } catch (NumberFormatException e) {
+                                            System.out.println("Entrada inválida. Por favor, digite um número de índice ou 'sair' para terminar.");
+                                        }
+                                    } while (!resposta.equalsIgnoreCase("sair"));
+
+                                    double precoTotal = 0.0;
+                                    for (Atracao a : atracoesEscolhidas) {
+                                        precoTotal += a.getPreco();
+                                    }
+                                    for (Atracao a : atracoesEscolhidas) {
+                                        System.out.println("Nome: " + a.getNomeAtracao());
+                                        System.out.println("Horário: " + a.getHorario());
+                                        System.out.println("Preço: " + a.getPreco());
+                                        System.out.println();
+                                    }
+                                    System.out.println("-----Preço total das atrações-----");
+                                    System.out.println("R$ :" + precoTotal);
+
+                                    obterClienteLogado().setAtracaosEscolhidas(atracoesEscolhidas);
+
+                                    Produto produtoAtr = new Produto("Compra de Atrações!", "Escolha de Atrações!", null, null, obterClienteLogado().getAtracaosEscolhidas());
+
+                                    Viagem vAtracao = new Viagem(obterClienteLogado(), produtoAtr);
+
                                     break;
                                 case 4:
+
+                                    System.out.println("Bem vindo ao seu Histórito de Viagens!");
+
+                                        obterClienteLogado().relatorio();
+
+
                                     break;
                                 case 5:
+                                    int opAv;
+                                    System.out.println("Vamos avaliar sua experiência com a gente?");
+                                    do {
+                                        System.out.println("1 - Passagem");
+                                        System.out.println("2 - Hospedagem");
+                                        System.out.println("3 - Atrações");
+                                        System.out.print("Opcao: ");
+                                        opAv = sc.nextInt();
+
+                                        switch (opAv){
+                                            case 1:
+                                                System.out.println("Vamos avaliar como foi sua experiência!");
+                                                obterClienteLogado().getPassagemEscolhida().relatorioPassagem();
+
+                                                System.out.print("Escreva sua avaliação: ");
+                                                String avaliacaoP = sc.next();
+
+                                                obterClienteLogado().getPassagemEscolhida().relatorioAvaliacao(avaliacaoP);
+
+
+                                                break;
+                                            case 2:
+                                                System.out.println("Vamos avaliar como foi sua experiência!");
+                                                obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
+
+                                                System.out.print("Escreva sua avaliação: ");
+                                                String avaliacaoH = sc.next();
+
+                                                obterClienteLogado().getHospedagemEscolhida().relatorioAvaliacao(avaliacaoH);
+
+                                                break;
+                                            case 3:
+                                                System.out.println("Vamos avaliar como foi sua experiência!");
+
+                                                for(int i = 0; i < obterClienteLogado().getAtracaosEscolhidas().size(); i++){
+                                                    obterClienteLogado().getAtracaosEscolhidas().get(i).relatorioAtracao();
+                                                }
+
+                                                System.out.print("Escreva sua avaliação: ");
+                                                String avaliacaoA = sc.next();
+
+                                                for (int i = 0; i < obterClienteLogado().getAtracaosEscolhidas().size(); i++){
+                                                    obterClienteLogado().getAtracaosEscolhidas().get(i).relatorioAvaliacao(avaliacaoA);
+                                                }
+
+                                                break;
+                                        }
+
+                                    }while(opAv != 0);
                                     break;
                             }
                         } while (op1 != 0);
@@ -417,186 +697,6 @@ public class Principal {
     }
 
 
-    public static boolean novaViagem() {
-        ArrayList<Produto> produtos = new ArrayList<>();
-
-        boolean destinoCriado = novoDestino();
-        novaHospedagem();
-        boolean atracaoCriada = novaAtracao();
-
-        if (destinoCriado && hospedagemCriada && atracaoCriada) {
-            Produto produto = new Produto("Pacote de Viagem!", "Pacote de viagens que inclui, Passagem, Hospedagem e Atrações!", produtos.get(0).calculaPreco(), Produto.TipoProduto.VIAGEM);
-            produtos.add(produto);
-
-            System.out.println("Perfeito, sua viagem foi criada!");
-
-            return true;
-        } else {
-            System.out.println("Falha ao criar a viagem. Verifique as etapas anteriores.");
-            return false;
-        }
-    }
-
-    public static ArrayList<Hospedagem> novaHospedagem() {
-        Scanner sc = new Scanner(System.in);
-        ArrayList<Hospedagem> hospedagens = new ArrayList<>();
-
-        System.out.println("Agora vamos escolher qual hotel deseja se hospedar para ter a melhor experiência!");
-
-        try {
-
-        } catch (Exception ex) {
-            System.out.println("Algo deu errado!");
-        }
-        return hospedagens;
-    }
-
-    public static boolean novaAtracao() {
-        Scanner sc = new Scanner(System.in);
-        ArrayList<Produto> produtos = new ArrayList<>();
-
-
-        try {
-
-
-            System.out.print("Deseja incluir atrações na sua viagem?\nTemos atrações como museus, restaurantes, cachoeiras etc(sim/nao): ");
-            String escolhaAtracao = sc.nextLine();
-            sc.nextLine();
-
-            if (escolhaAtracao.equals("sim")) {
-
-                System.out.println("Vamos as atrações que você pode adquirir!");
-
-                ArrayList<Atracao> atracoes = new ArrayList<>();
-
-                Atracao[] at = new Atracao[9];
-
-                at[0] = new AtracaoPaga("Pontos Turísticos Premium", "Um passeio incrível por todos os pontos turísticos da cidade!", "8h às 15h", 150, "Ponto Turistico");
-                at[1] = new AtracaoGratuita("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural");
-                at[2] = new AtracaoPaga("Teatros, Concertos e Óperas Premium", "Ingressos para eventos culturais que estão acontecendo na cidade!", "15h às 23h", 200, "Cultural");
-                at[3] = new AtracaoPaga("Restaurantes Premium", "Uma mesa reservada nos 2 melhores restaurantes para você conhecer a culinaria local!", "17h às 23h", 80, "Gastronômico");
-                at[4] = new AtracaoGratuita("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico");
-                at[5] = new AtracaoGratuita("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza");
-                at[6] = new AtracaoPaga("Spa Premium", "Quer algo mais tranquilo pra relaxar? Um dia de spa para voce!", "8h às 21h", 100, "Bem estar");
-                at[7] = new AtracaoPaga("Esportes Radicais Premium", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes");
-                at[8] = new AtracaoGratuita("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes");
-
-
-                atracoes.addAll(Arrays.asList(at));
-
-                for (int i = 0; i < atracoes.size(); i++) {
-                    System.out.println((i) + atracoes.get(i).getNomeAtracao() +
-                            "\nPreço: " + atracoes.get(i).getPreco() + "\nDescrição: " + atracoes.get(i).getDescricao());
-                }
-
-
-                int indiceEscolhido;
-                String resposta;
-                List<Atracao> atracoesEscolhidas = new ArrayList<>();
-                do {
-                    System.out.print("Qual deseja escolher (digite o número do índice ou 'sair' para terminar)?: ");
-                    resposta = sc.nextLine();
-
-                    try {
-                        indiceEscolhido = Integer.parseInt(resposta);
-                        if (indiceEscolhido >= 0 && indiceEscolhido < atracoes.size()) {
-                            Atracao atracaoEscolhida = atracoes.get(indiceEscolhido);
-                            atracoesEscolhidas.add(atracaoEscolhida);
-                        } else {
-                            System.out.println("Índice inválido. Por favor, digite um número de índice válido.");
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Entrada inválida. Por favor, digite um número de índice ou 'sair' para terminar.");
-                    }
-                } while (!resposta.equalsIgnoreCase("sair"));
-
-                double precoTotal = 0.0;
-                for (Atracao a : atracoesEscolhidas) {
-                    precoTotal += a.getPreco();
-                }
-                for (Atracao a : atracoesEscolhidas) {
-                    System.out.println("Nome: " + a.getNomeAtracao());
-                    System.out.println("Horario: " + a.getHorario());
-                    System.out.println("Preço: " + a.getPreco());
-                    System.out.println();
-                }
-                System.out.println("-----Preço total das atrações-----");
-                System.out.println("R$ :" + precoTotal);
-            }
-            Produto produto = new Produto("Atração", "Escolha de uma atração", produtos.get(0).calculaPreco(), Produto.TipoProduto.HOSPEDAGEM);
-
-            return true;
-        } catch (Exception ex) {
-            System.out.println("Algo deu errado!");
-            return false;
-        }
-    }
-
-    public static boolean novoDestino() {
-        Scanner sc = new Scanner(System.in);
-
-        try {
-            ArrayList<Destino> destinos = new ArrayList<>();
-            Destino[] dest = new Destino[5];
-
-            dest[0] = new Destino("Paris", "Europa", "A cidade do Amor!", "Torre Eiffel, Arco do Triunfo", 5500);
-            dest[1] = new Destino("Los Angeles", "America do Norte", "A cidade da diversão!!", "Hollywood, cassinos!", 3265.99);
-            dest[2] = new Destino("Lisboa", "Europa", "A cidade histórica!", "Castelo de São Jorge, Praias paradisíacas!", 3899.99);
-            dest[3] = new Destino("Ottawa", "America do Norte", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!", 1879.59);
-            dest[4] = new Destino("Atenas", "Europa", "A cidade eterna, repleta de história e arquitetura magnífica.", "Partenon, Acrópole!", 4689.89);
-
-            destinos.addAll(Arrays.asList(dest));
-
-            dataCheckIn();
-            dataCheckOut();
-
-            System.out.println("Ótima data! Temos os seguintes destinos disponíveis: ");
-            for (int i = 0; i < destinos.size(); i++) {
-                System.out.println((i) + destinos.get(i).getNome() +
-                        "\nPreço: " + destinos.get(i).getPreco() + "\nDescrição: " + destinos.get(i).getDescricao());
-            }
-            System.out.print("Qual deseja escolher?: ");
-            String destino = sc.next();
-            sc.nextLine();
-
-            for (Destino d : destinos) {
-                if (d.getNome().equalsIgnoreCase(destino)) {
-                    System.out.println("Destino: " + d.getNome());
-                    System.out.println("Descrição: " + d.getDescricao());
-                    System.out.println("Preço: " + d.getPreco());
-
-                }
-            }
-            System.out.println("Excelente escolha!");
-            return true;
-
-        } catch (Exception e) {
-            System.out.println("ERRO! TENTE NOVAMENTE");
-            sc.nextLine();
-            return false;
-        }
-    }
-    /*
-    public static boolean novaPassagem(){
-        Scanner sc = new Scanner(System.in);
-
-        ArrayList<Passagem> passagem = new ArrayList<>();
-        Passagem[] pass = new Passagem[10];
-
-        pass[0] = new PassagemAerea()
-        pass[0]
-        pass[0]
-        pass[0]
-        pass[0]
-        pass[0]
-        pass[0]
-        pass[0]
-        pass[0]
-        pass[0]
-
-
-}
-        */
 
     public static double calcularPrecoPassagem(String classe) {
 
@@ -615,38 +715,6 @@ public class Principal {
 
         return valorTotal;
     }
-
-
-    public static boolean avaliacao() {
-        System.out.println("Bem vindo(a) a nossa área de avaliação!");
-        int op;
-        Scanner sc = new Scanner(System.in);
-
-        do {
-            System.out.println("O que deseja avaliar?");
-            System.out.println("1 - Destino");
-            System.out.println("2 - Hospedagem");
-            System.out.println("3 - Atrações");
-            System.out.println("0 - Sair");
-            System.out.print("Opcao: ");
-            op = sc.nextInt();
-
-            switch (op) {
-                case 1:
-
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-            }
-
-        } while (op != 0);
-
-
-        return true;
-    }
-
 
 }
 

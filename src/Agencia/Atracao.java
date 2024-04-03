@@ -1,5 +1,7 @@
 package Agencia;
 
+import java.util.ArrayList;
+
 public class Atracao {
     private Destino destino;
     private String nomeAtracao;
@@ -8,6 +10,7 @@ public class Atracao {
     private double preco;
     private String tipo;
     private int lotacao;
+    private ArrayList<String> avaliacoes;
 
     public Atracao(String nomeAtracao, String descricao, String horario, double preco, String tipo, Destino destino) {
         this.nomeAtracao = nomeAtracao;
@@ -16,6 +19,7 @@ public class Atracao {
         this.preco = preco;
         this.tipo = tipo;
         this.destino = destino;
+        this.avaliacoes = new ArrayList<>();
         this.lotacao++;
     }
 
@@ -59,8 +63,17 @@ public class Atracao {
         return x;
     }
 
+    public void relatorioAvaliacao(String avaliacao){
+        avaliacoes.add(avaliacao);
+    }
+
+
     public String relatorioAtracao() {
-        return "Nome: " + nomeAtracao + "\nHorario Funcionamento: " + horario + "\nLotacao Atual: " +
-                lotacao + "\nPreco/Hr: R$" + preco  + "\nTipo de atração: " + tipo;
+        return "Nome: " + nomeAtracao +
+                "\nHorario Funcionamento: " + horario +
+                "\nDescrição: " + descricao +
+                "\nPreco: R$" + preco  +
+                "\nTipo de atração: " + tipo +
+                "\nLotado: " + verificarDisponibilidade();
     }
 }

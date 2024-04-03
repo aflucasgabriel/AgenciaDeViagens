@@ -8,13 +8,12 @@ import java.util.Random;
 
 public class PassagemAerea extends Passagem{
     Random r = new Random();
-
+    private ArrayList<String> avaliacoes;
     private String companhiaAerea;
     private String classe;
     private int numVoo;
     private int numAssento;
     private int quantAssentos = 0;
-    private List<String> avaliacoes;
 
     public PassagemAerea(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco, String companhiaAerea, int numAssento) {
         super(origem, destino, dataIda, dataVolta, numAssento);
@@ -25,6 +24,8 @@ public class PassagemAerea extends Passagem{
         this.avaliacoes = new ArrayList<>();
 
     }
+
+
 
     public int getNumVoo() {
         return numVoo;
@@ -98,17 +99,20 @@ public class PassagemAerea extends Passagem{
         avaliacoes.add(avaliacao);
     }
 
+    @Override
+    public String relatorioPassagem(){
 
-    public void relatorio(){
+        String relatorio = "Companhia Aera: " + companhiaAerea +
+        "\nOrigem: " + getOrigem() +
+        "\nDestino: " + getDestino() +
+        "\nNumero Assento = " + numAssento +
+        "\nData Ida: " + getDataIda() +
+        "\nData Volta: " + getDataVolta() +
+        "\nPreço Passagem + Tarifas: R$" + getPreco();
 
-        System.out.println("Companhia Aera: " + companhiaAerea);
-        System.out.println("Origem: " + getOrigem());
-        System.out.println("Destino: " + getDestino());
-        System.out.println("Numero Assento = " + numAssento);
-        System.out.println("Data Ida: " + getDataIda());
-        System.out.println("Data Volta: " + getDataVolta());
-        System.out.println("Preço Passagem + Tarifas: R$" + getPreco());
-
+        return relatorio;
     }
+
+
 
 }
