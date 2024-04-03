@@ -620,34 +620,69 @@ public class Principal {
                                     System.out.println("Bem vindo ao seu Histórito de Viagens!");
 
                                     List<Viagem> historico = Autenticacao.obterClienteLogado().getHistoricoViagens();
-                                    if(Autenticacao.obterClienteLogado().getDestinoEscolhido() == null){
-                                        double pD = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
-                                        pD = 0;
-                                        double preco = pD + Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco() +
-                                                Autenticacao.obterClienteLogado().getPassagemEscolhida().getPreco();
-                                    } else if (Autenticacao.obterClienteLogado().getHospedagemEscolhida() == null) {
-                                    double pH = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
-                                    pH = 0;
-                                        double preco = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + pH +
-                                                Autenticacao.obterClienteLogado().getPassagemEscolhida().getPreco();
-                                    }else if(Autenticacao.obterClienteLogado().getPassagemEscolhida() == null) {
-                                        double pP = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
-                                        pP = 0;
-                                        double preco = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco() +
-                                                pP;
+/*
 
-
+                                    double preco = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco() +
+                                            Autenticacao.obterClienteLogado().getPassagemEscolhida().getPreco();
                                     if (Autenticacao.obterClienteLogado().getAtracaosEscolhidas() != null) {
                                         for (Atracao a : Autenticacao.obterClienteLogado().getAtracaosEscolhidas()) {
                                             preco += a.getPreco();
+                                        }
+                                    }
+                                    for (Viagem v : historico) {
+                                        System.out.println(v.getProduto().relatorio() + "\nPreço: R$ " + preco);
+                                    }
+
+*/
+
+                                    if (historico.isEmpty()) {
+                                        System.out.println("Seu histórico de viagens está vazio.");
+                                    } else {
+                                        for (Viagem vi : historico) {
+                                            Produto pro = vi.getProduto();
+                                            if (pro != null) {
+                                                System.out.println("---- Detalhes da Viagem ----");
+                                                System.out.println("Tipo de Viagem: " + Autenticacao.obterClienteLogado().relatorio());
+
+                                                // Se a viagem incluir apenas hospedagem
+                                                if (Autenticacao.obterClienteLogado().getAtracaosEscolhidas() == null && Autenticacao.obterClienteLogado().getAtracaosEscolhidas() != null) {
+                                                    Hospedagem hospe = pro.getHospedagem();
+                                                    System.out.println("---- Detalhes da Hospedagem ----");
+                                                    Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
+                                                }
+
+                                                // Se a viagem incluir apenas atrações
+                                                if (Autenticacao.obterClienteLogado().getAtracaosEscolhidas() != null && Autenticacao.obterClienteLogado().getHospedagemEscolhida() == null) {
+                                                    List<Atracao> atracoesH = pro.getAtracao();
+                                                    System.out.println("---- Detalhes das Atrações ----");
+                                                    for (Atracao atra : atracoesH) {
+                                                        atra.relatorioAtracao();
+                                                    }
+                                                }
+
+                                                // Se a viagem incluir tanto hospedagem quanto atrações
+                                                if (Autenticacao.obterClienteLogado().getAtracaosEscolhidas() != null && Autenticacao.obterClienteLogado().getAtracaosEscolhidas() != null) {
+                                                    Hospedagem hospedagemH = pro.getHospedagem();
+                                                    System.out.println("---- Detalhes da Hospedagem ----");
+                                                    System.out.println("Nome do Hotel: " + hospedagemH.getNomeHotel());
+                                                    System.out.println("Localização: " + hospedagemH.getLocalizacao());
+                                                    System.out.println("Preço da Hospedagem: " + hospedagemH.calcularPreco());
+
+                                                    List<Atracao> atracoesp = pro.getAtracao();
+                                                    System.out.println("---- Detalhes das Atrações ----");
+                                                    for (Atracao atracaoA : atracoesp) {
+                                                        System.out.println("Nome da Atração: " + atracaoA.getNomeAtracao());
+                                                        System.out.println("Horário: " + atracaoA.getHorario());
+                                                        System.out.println("Preço: " + atracaoA.getPreco());
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
 
                                     for (Viagem v : historico) {
                                         System.out.println(v.getProduto().relatorio() + "\nPreço: R$ " + preco);
                                     }
-                            }
-
                                     break;
                                 case 5:
                                     int opAv;
