@@ -22,7 +22,7 @@ public class Principal {
         Scanner sc = new Scanner(System.in);
         int op = 0, op1 = 0, op2 = 0;
 
-        System.out.println("Seja bem vindo(a) a RotaGlobal, a melhor escolha em Agencia de Viagens!\n");
+        System.out.println("\nSeja bem vindo(a) a RotaGlobal, a melhor escolha em Agencia de Viagens!\n");
 
         do {
             System.out.println("=========Menu=========");
