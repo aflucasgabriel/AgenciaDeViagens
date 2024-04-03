@@ -1,17 +1,27 @@
 package Agencia;
 
+import java.util.List;
+
 public class Destino {
     String nome;
     String localizacao;
     String descricao;
     String pontosTuristicos;
+    private double preco;
+    private List<String> avaliacoes;
 
-    public Destino(String nome, String localizacao, String descricao, String pontosTuristicos) {
+    public Destino(String nome, String localizacao, String descricao, String pontosTuristicos, double preco) {
         this.nome = nome;
         this.localizacao = localizacao;
         this.descricao = descricao;
         this.pontosTuristicos = pontosTuristicos;
+        this.preco = preco;
     }
+
+    public double getPreco() {
+        return preco;
+    }
+
 
     public String getNome() {
         return nome;
@@ -44,4 +54,19 @@ public class Destino {
     public void setPontosTuristicos(String pontosTuristicos) {
         this.pontosTuristicos = pontosTuristicos;
     }
+
+    public void relatotioAvaliacao(String avaliacao){
+        avaliacoes.add(avaliacao);
+    }
+
+    public String relatorioDestino(){
+        String relatorio = "\nNome: " + nome +
+                "\nLocalização: " + localizacao +
+                "\nDescrição: " + descricao +
+                "\nPontos Turísticos" + pontosTuristicos +
+                "\nPreço: R%" + preco;
+
+        return relatorio;
+    }
+
 }

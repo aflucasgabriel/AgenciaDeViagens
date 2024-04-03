@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class Hospedagem {
+public class Hospedagem{
     // atributos 
     private String nomeHotel;
     private String localizacao;
@@ -16,7 +16,7 @@ public class Hospedagem {
     private List<String> avaliacoes;
     private LocalDate dataInicial;
     private LocalDate dataFinal;
-    int numDias;
+    private int numDias;
     private double PrecoDiario;
 
 
@@ -31,6 +31,26 @@ public class Hospedagem {
         this.dataInicial = dataInicial;
         this.dataFinal = dataFinal;
         this.PrecoDiario = PrecoDiario;
+    }
+
+    public int getNumDias() {
+        return numDias;
+    }
+
+    public void setNumDias(int numDias) {
+        this.numDias = numDias;
+    }
+
+    public int getQuartosDisponiveis() {
+        return QuartosDisponiveis;
+    }
+
+    public void setQuartosDisponiveis(int quartosDisponiveis) {
+        QuartosDisponiveis = quartosDisponiveis;
+    }
+
+    public void setServicosInclusos(List<String> servicosInclusos) {
+        this.servicosInclusos = servicosInclusos;
     }
 
 
@@ -50,10 +70,13 @@ public class Hospedagem {
         return PrecoDiario;
     }
 
+    public void setPrecoDiario(double precoDiario) {
+        PrecoDiario = precoDiario;
+    }
     //método calcular preço
 
-    public double calcularPreco(int numDias) {
-        return PrecoDiario * numDias;
+    public double calcularPreco() {
+        return PrecoDiario * getNumDias();
     }
 
     //método reservar 
@@ -76,20 +99,21 @@ public class Hospedagem {
         return b;
     }
 
-    public void relatotioAvaliacao(String avaliacao){
+    public void relatorioAvaliacao(String avaliacao){
         avaliacoes.add(avaliacao);
     }
 
-    public void relatorio(){
-        System.out.println("Nome do Hotel: " + nomeHotel);
-        System.out.println("Localizacao: " + localizacao);
-        System.out.println("Numero de pessoas por quarto: " + NumPessoasQuarto);
-        System.out.println("Quartos Disponíveis: "+ QuartosDisponiveis);
-        System.out.println("Servicos inclusos: " +servicosInclusos);
-        System.out.println("Avaliaçoes: " +avaliacoes);
-        System.out.println("Data inicial: "+dataInicial);
-        System.out.println("Data Final: " +dataFinal);
-        System.out.println("Preco diario:" + PrecoDiario);
+    public String relatorioHospedagem(){
+        String relatorio = "\nNome do Hotel: " + nomeHotel+
+        "\nLocalizacao: " + localizacao+
+        "\nServicos inclusos: " +servicosInclusos+
+        "\nAvaliaçoes: " +avaliacoes+
+        "\nData inicial: "+dataInicial+
+        "\nData Final: " +dataFinal+
+        "\nPreco diario:" + PrecoDiario;
+
+        return relatorio;
+
     }
 
 
