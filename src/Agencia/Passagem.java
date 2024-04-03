@@ -1,5 +1,6 @@
 package Agencia;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,24 @@ public abstract class Passagem {
     private LocalDate dataIda;
     private LocalDate dataVolta;
     private double preco;
+    private int numAssento;
 
 
-    public Passagem(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta) {
+    public Passagem(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, int numAssento) {
         this.origem = origem;
         this.destino = destino;
         this.dataIda = dataIda;
         this.dataVolta = dataVolta;
         this.preco = destino.getPreco();
+        this.numAssento = numAssento;
+    }
+
+    public int getNumAssento() {
+        return numAssento;
+    }
+
+    public void setNumAssento(int numAssento) {
+        this.numAssento = numAssento;
     }
 
     public String getOrigem() {

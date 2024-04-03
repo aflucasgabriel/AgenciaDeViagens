@@ -14,6 +14,14 @@ public class Principal {
 
     public static void main(String[] args) {
         ArrayList<Cliente> cl = new ArrayList<>();
+        ArrayList<Passagem> passagem = new ArrayList<>();
+        ArrayList<Hospedagem> hospedagem = new ArrayList<>();
+        ArrayList<Atracao> atracao = new ArrayList<>();
+
+
+        PassagemTerrestre passagemT;
+        PassagemAerea passagemA;
+        double tarifaFixa = 1.5;
 
 
         Scanner sc = new Scanner(System.in);
@@ -48,23 +56,26 @@ public class Principal {
                                     LocalDate dataIda = dataCheckIn();
                                     LocalDate dataVolta = dataCheckOut();
 
-                                    Destino[] dest = new Destino[5];
+                                    Destino[] dest = new Destino[7];
 
-                                    dest[0] = new Destino("Paris", "Europa", "A cidade do Amor!", "Torre Eiffel, Arco do Triunfo", 5500);
-                                    dest[1] = new Destino("Los Angeles", "America do Norte", "A cidade da diversão!!", "Hollywood, cassinos!", 3265.99);
-                                    dest[2] = new Destino("Lisboa", "Europa", "A cidade histórica!", "Castelo de São Jorge, Praias paradisíacas!", 3899.99);
-                                    dest[3] = new Destino("Ottawa", "America do Norte", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!", 1879.59);
-                                    dest[4] = new Destino("Atenas", "Europa", "A cidade eterna, repleta de história e arquitetura magnífica.", "Partenon, Acrópole!", 4689.89);
+                                    dest[0] = new Destino("Paris", "Europa", "A cidade do Amor!", "Torre Eiffel, Arco do Triunfo", 2500);
+                                    dest[1] = new Destino("Los Angeles", "America do Norte", "A cidade da diversão!!", "Hollywood, cassinos!", 1265.99);
+                                    dest[2] = new Destino("Lisboa", "Europa", "A cidade histórica!", "Castelo de São Jorge, Praias paradisíacas!", 1899.99);
+                                    dest[3] = new Destino("Ottawa", "America do Norte", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!", 679.59);
+                                    dest[4] = new Destino("Atenas", "Europa", "A cidade eterna, repleta de história e arquitetura magnífica.", "Partenon, Acrópole!", 1689.89);
+                                    dest[5] = new Destino("Rio de Janeiro", "America do Sul", "A cidade maravilhosa! Repleta de história e belezas naturais!", "Copacabana, Cristo Redentor, Pão de Açucar", 245.89);
+                                    dest[6] = new Destino("Salvador", "America do Sul", "A capital da Alegria!", "Praia do Forte, Pelourinho", 250.99);
+
 
                                     System.out.println("Perfeito! Temos os seguintes destinos: ");
-                                    for (int i = 0; i< dest.length; i++){
-                                        System.out.println("Destino: " + dest[i].getNome() + "\nLocalização" + dest[i].localizacao + "\nDescrição: " + dest[i].getDescricao() + "\nPontos Turísticos: " + dest[i].pontosTuristicos + "\nPreço: R$ "+dest[i].getPreco());
+                                    for (int i = 0; i < dest.length; i++) {
+                                        System.out.println("Destino: " + dest[i].getNome() + "\nLocalização" + dest[i].localizacao + "\nDescrição: " + dest[i].getDescricao() + "\nPontos Turísticos: " + dest[i].pontosTuristicos + "\nPreço: R$ " + dest[i].getPreco());
                                     }
                                     System.out.print("Qual deseja escolher?(Digite o nome: ): ");
                                     String destino = sc.next();
                                     sc.nextLine();
 
-                                    for (int i = 0; i < dest.length;i++) {
+                                    for (int i = 0; i < dest.length; i++) {
                                         if (dest[i].getNome().equalsIgnoreCase(destino)) {
                                             System.out.println("Destino: " + dest[i].getNome());
                                             System.out.println("Descrição: " + dest[i].getDescricao());
@@ -78,21 +89,205 @@ public class Principal {
 
                                     System.out.println("Excelente escolha!");
                                     System.out.println("Agora vamos escolher sua passagem!");
-                                    System.out.print("Deseja viajar via Terrestre ou Aerea?: ");
-                                    String transporte = sc.next();
+                                    String companhia;
+                                    double taxaEmbarqueRio = obterClienteLogado().getDestinoEscolhido().getPreco() + 100.0;
+                                    double taxaEmbarqueSal = obterClienteLogado().getDestinoEscolhido().getPreco() + 200.0;
+                                    double passTotalRio = taxaEmbarqueRio + (taxaEmbarqueRio * tarifaFixa);
+                                    double passTotalSal = taxaEmbarqueSal + (taxaEmbarqueSal * tarifaFixa);
+                                    double tarifaAerea = obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa;
 
-                                    if (transporte.equalsIgnoreCase("terrestre")){
+                                    if (obterClienteLogado().getDestinoEscolhido().getLocalizacao().equalsIgnoreCase("America do Sul")) {
+                                        System.out.println("Deseja viajar via Terrestre ou Aerea?");
+                                        String transporte = sc.next();
+
+                                        if (transporte.equalsIgnoreCase("Terrestre")) {
+                                            System.out.print("\nQual a origem?: ");
+                                            String origem = sc.next();
+
+
+                                            System.out.println("Por qual companhia deseja viajar? ");
+                                            if (obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Rio de Janeiro")) {
+                                                System.out.println("Guanabara - R$" + passTotalRio);
+                                                System.out.println("Rode Rotas - R$" + passTotalRio);
+                                                System.out.println("Platina - R$" + passTotalRio + "\n");
+                                                companhia = sc.next();
+
+
+                                                System.out.print("Qual assento deseja reservar?(1 a 60): ");
+                                                int assento = sc.nextInt();
+
+                                                System.out.println("Deseja adicionar bagagem extra? R$5.00 por bagagem extra(s/n) ");
+                                                String bag = sc.next();
+
+                                                if (bag.equalsIgnoreCase("s")) {
+                                                    System.out.print("Quantas bagagens extras deseja adicionar?: ");
+                                                    int quantBag = sc.nextInt();
+
+                                                    passagemT = new PassagemTerrestre(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, passTotalRio, companhia, assento);
+                                                    passagemT.adicionarBagagemExtra(quantBag);
+                                                    passagem.add(passagemT);
+                                                }
+                                            } else if (obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Salvador")) {
+                                                System.out.println("Guanabara - R$" + passTotalSal);
+                                                System.out.println("Rode Rotas - R$" + passTotalSal);
+                                                System.out.println("Platina - R$" + passTotalSal);
+                                                companhia = sc.next();
+
+
+                                                System.out.print("Qual assento deseja reservar?(1 a 60): ");
+                                                int assento = sc.nextInt();
+
+                                                System.out.println("Deseja adicionar bagagem extra? R$5.00 por bagagem extra(s/n) ");
+                                                String bag = sc.next();
+
+                                                if (bag.equalsIgnoreCase("s")) {
+                                                    System.out.print("Quantas bagagens extras deseja adicionar?: ");
+                                                    int quantBag = sc.nextInt();
+
+                                                    passagemT = new PassagemTerrestre(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, passTotalSal, companhia, assento);
+                                                    passagemT.adicionarBagagemExtra(quantBag);
+                                                    passagem.add(passagemT);
+
+
+                                                } else {
+                                                    passagemT = new PassagemTerrestre(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, passTotalSal, companhia, assento);
+                                                    passagem.add(passagemT);
+
+                                                }
+                                            }
+                                        } else {
+                                            System.out.print("\nQual a origem?: ");
+                                            String origem = sc.next();
+
+                                            System.out.println("Qual classe deseja viajar? (Economica/Executiva)");
+                                            String classe = sc.next();
+
+                                            System.out.println("Por qual companhia deseja viajar? ");
+                                            if (obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Rio de Janeiro")) {
+                                                double totalRio = (obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa) + obterClienteLogado().getDestinoEscolhido().getPreco();
+                                                System.out.println("Latam - R$" + totalRio);
+                                                System.out.println("Azul - R$" + totalRio);
+                                                System.out.println("GOL - R$" + totalRio);
+                                                companhia = sc.next();
+
+
+                                                System.out.print("Qual assento deseja reservar?(1 a 60): ");
+                                                int assento = sc.nextInt();
+
+                                                System.out.println("Deseja adicionar bagagem extra? R$50.00 por bagagem extra(s/n) ");
+                                                String bag = sc.next();
+
+                                                if (bag.equalsIgnoreCase("s")) {
+                                                    System.out.print("Quantas bagagens extras deseja adicionar?: ");
+                                                    int quantBag = sc.nextInt();
+
+                                                    passagemA = new PassagemAerea(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento);
+                                                    passagemA.calculaPreco();
+                                                    passagemA.adicionarBagagemExtra(quantBag);
+                                                    passagem.add(passagemA);
+                                                } else {
+                                                    passagemA = new PassagemAerea(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento);
+                                                    passagemA.calculaPreco();
+                                                    passagem.add(passagemA);
+                                                }
+                                            }
+                                        }
+
+                                    } else {
+                                        System.out.println("Como seu destino não está na América do Sul, temos disponível somente passagens aéreas!");
                                         System.out.print("\nQual a origem?: ");
                                         String origem = sc.next();
 
+                                        System.out.println("Qual classe deseja viajar? (Economica/Executiva)");
+                                        String classe = sc.next();
+
+                                        System.out.println("Por qual companhia deseja viajar? ");
+                                        if (obterClienteLogado().getDestinoEscolhido().getLocalizacao().equalsIgnoreCase("America do Norte")) {
+                                            double totalAme = (obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa) + obterClienteLogado().getDestinoEscolhido().getPreco();
+                                            System.out.println("Latam - R$" + totalAme);
+                                            System.out.println("Azul - R$" + totalAme);
+                                            System.out.println("GOL - R$" + totalAme);
+                                            companhia = sc.next();
 
 
+                                            System.out.print("Qual assento deseja reservar?(1 a 60): ");
+                                            int assento = sc.nextInt();
 
+                                            System.out.println("Deseja adicionar bagagem extra? R$50.00 por bagagem extra(s/n) ");
+                                            String bag = sc.next();
 
+                                            if (bag.equalsIgnoreCase("s")) {
+                                                System.out.print("Quantas bagagens extras deseja adicionar?: ");
+                                                int quantBag = sc.nextInt();
 
-
-
+                                                passagemA = new PassagemAerea(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento);
+                                                passagemA.calculaPreco();
+                                                passagemA.adicionarBagagemExtra(quantBag);
+                                                passagem.add(passagemA);
+                                            } else {
+                                                passagemA = new PassagemAerea(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento);
+                                                passagemA.calculaPreco();
+                                                passagem.add(passagemA);
+                                            }
+                                        }
                                     }
+
+                                    System.out.println("Tudo certo!\nAgora vamos escolher sua hospedagem!");
+
+                                    List<String> servicosHotelLotus = new ArrayList<>();
+                                    servicosHotelLotus.add("Wi-Fi");
+                                    servicosHotelLotus.add("Café da manhã");
+
+                                    List<String> servicosHotelSavana = new ArrayList<>();
+                                    servicosHotelSavana.add("Wi-Fi");
+                                    servicosHotelSavana.add("Café da manhã");
+                                    servicosHotelSavana.add("Piscina");
+                                    servicosHotelSavana.add("Almoço e Janta");
+
+                                    List<String> servicosHotelCarlton = new ArrayList<>();
+                                    servicosHotelCarlton.add("Wi-Fi");
+                                    servicosHotelCarlton.add("Café da manhã");
+                                    servicosHotelCarlton.add("Piscina");
+                                    servicosHotelCarlton.add("Academia");
+                                    servicosHotelCarlton.add("Almoço e Janta");
+                                    servicosHotelCarlton.add("Estacionamento");
+
+                                    Hospedagem[] hosp = new Hospedagem[3];
+                                    hosp[0] = new Hospedagem("Lotus", "Rua das Palmeiras, 103", dataCheckIn(), dataCheckOut(), 150, 15, servicosHotelLotus);
+                                    hosp[1] = new Hospedagem("Savana", "Avenida Principal, 6384", dataCheckIn(), dataCheckOut(), 200, 3, servicosHotelSavana);
+                                    hosp[2] = new Hospedagem("Carlton", "Avenida Doutor Hans Chucrute, 257", dataCheckIn(), dataCheckOut(), 300, 8, servicosHotelCarlton);
+
+
+                                    for (int i = 0; i < hosp.length; i++) {
+                                        System.out.println("Nome do Hotel: " + hosp[i].getNomeHotel() +
+                                                "\nPreço Diária: " + hosp[i].getPrecoDiario() + "\nServiços: " + hosp[i].getServicosInclusos());
+                                    }
+
+                                    System.out.print("Qual deseja escolher?(Digite o nome do Hotel): ");
+                                    String hotel = sc.next();
+                                    sc.nextLine();
+
+                                    for (int i = 0; i < dest.length; i++) {
+                                        if (hosp[i].getNomeHotel().equalsIgnoreCase(hotel)) {
+                                            System.out.println("Destino: " + hosp[i].getNomeHotel());
+                                            System.out.println("Endereço: " + hosp[i].getLocalizacao());
+                                            System.out.println("Preço: " + hosp[i].getPrecoDiario());
+
+                                        }
+                                        obterClienteLogado().setHospedagemEscolhida(hosp[i]);
+
+                                        // Criando um produto com a hospedagem escolhida
+                                        //Produto produto = new Produto("Hospedagem", "Reserva de hospedagem de hotel", h.calcularPreco(), Produto.TipoProduto.HOSPEDAGEM);
+                                        //System.out.println("Produto criado: " + produto);
+                                    }
+                                    double total = obterClienteLogado().getHospedagemEscolhida().calcularPreco(dias());
+                                    Hospedagem hosped = new Hospedagem(obterClienteLogado().getHospedagemEscolhida().getNomeHotel(), obterClienteLogado().getHospedagemEscolhida().getLocalizacao(), dataIda, dataVolta, obterClienteLogado().getHospedagemEscolhida().getPrecoDiario(), obterClienteLogado().getHospedagemEscolhida().getQuartosDisponiveis(), obterClienteLogado().getHospedagemEscolhida().getServicosInclusos());
+                                    hospedagem.add(hosped);
+                                    System.out.println("Total da Hospedagem: R$" + total);
+
+                                    System.out.println("Excelente escolha!");
+                                    System.out.println("Para finalizar, iremos escolher algumas atrações!");
+
 
                                     break;
 
@@ -249,56 +444,7 @@ public class Principal {
         System.out.println("Agora vamos escolher qual hotel deseja se hospedar para ter a melhor experiência!");
 
         try {
-            List<String> servicosHotelLotus = new ArrayList<>();
-            servicosHotelLotus.add("Wi-Fi");
-            servicosHotelLotus.add("Café da manhã");
-            servicosHotelLotus.add("Almoço");
 
-            List<String> servicosHotelSavana = new ArrayList<>();
-            servicosHotelSavana.add("Wi-Fi");
-            servicosHotelSavana.add("Café da manhã");
-            servicosHotelSavana.add("Piscina");
-            servicosHotelSavana.add("Almoço e Janta");
-
-            List<String> servicosHotelCarlton = new ArrayList<>();
-            servicosHotelCarlton.add("Wi-Fi");
-            servicosHotelCarlton.add("Café da manhã");
-            servicosHotelCarlton.add("Piscina");
-            servicosHotelCarlton.add("Academia");
-            servicosHotelCarlton.add("Almoço e Janta");
-            servicosHotelCarlton.add("Estacionamento");
-
-            Hospedagem[] hosp = new Hospedagem[3];
-            hosp[0] = new Hospedagem("Hotel Lotus", "Rua das Palmeiras, 103", dataCheckIn(), dataCheckOut(), 150, 15, servicosHotelLotus);
-            hosp[1] = new Hospedagem("Hotel Savana", "Avenida Principal, 6384", dataCheckIn(), dataCheckOut(), 200, 3, servicosHotelSavana);
-            hosp[2] = new Hospedagem("Hotel Carlton", "Avenida Doutor Hans Chucrute, 257", dataCheckIn(), dataCheckOut(), 300, 8, servicosHotelCarlton);
-
-
-            hospedagens.addAll(Arrays.asList(hosp));
-
-
-            for (Hospedagem h : hospedagens) {
-                System.out.println("Nome do Hotel: " + h.getNomeHotel() +
-                        "\nPreço Diária: " + h.getPrecoDiario() + "\nServiços: " + h.getServicosInclusos());
-            }
-
-            System.out.print("Qual deseja escolher?(Digite o nome do Hotel): ");
-            String hotel = sc.next();
-            sc.nextLine();
-
-            for (Hospedagem h : hospedagens) {
-                if (h.getNomeHotel().equalsIgnoreCase(hotel)) {
-                    System.out.println("Nome: " + h.getNomeHotel());
-                    System.out.println("Endereço: " + h.getLocalizacao());
-                    System.out.println("Preço total: " + h.calcularPreco());
-
-                    // Criando um produto com a hospedagem escolhida
-                    Produto produto = new Produto("Hospedagem", "Reserva de hospedagem de hotel", h.calcularPreco(), Produto.TipoProduto.HOSPEDAGEM);
-                    System.out.println("Produto criado: " + produto);
-                }
-            }
-
-            System.out.println("Excelente escolha!");
         } catch (Exception ex) {
             System.out.println("Algo deu errado!");
         }
@@ -452,11 +598,23 @@ public class Principal {
 }
         */
 
+    public static double calcularPrecoPassagem(String classe) {
 
 
+        double valorTotal;
+        if (classe.equalsIgnoreCase("economica")) {
+            valorTotal = obterClienteLogado().getDestinoEscolhido().getPreco() + (obterClienteLogado().getDestinoEscolhido().getPreco() * 0.5);
+            return valorTotal;
 
+        } else if (classe.equalsIgnoreCase("executiva")) {
+            valorTotal = obterClienteLogado().getDestinoEscolhido().getPreco() + (obterClienteLogado().getDestinoEscolhido().getPreco() * 1.2);
+            valorTotal += calculaTarifa();
+            return valorTotal;
 
+        }
 
+        return valorTotal;
+    }
 
 
     public static boolean avaliacao() {

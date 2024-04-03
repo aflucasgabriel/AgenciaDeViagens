@@ -22,6 +22,7 @@ public class Destino {
         return preco;
     }
 
+
     public String getNome() {
         return nome;
     }

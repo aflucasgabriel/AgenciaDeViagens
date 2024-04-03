@@ -15,9 +15,8 @@ public class PassagemTerrestre extends Passagem{
     private List<String> avaliacoes;
 
     public PassagemTerrestre(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco, String companhia, int numAssento) {
-        super(origem, destino, dataIda, dataVolta);
+        super(origem, destino, dataIda, dataVolta, numAssento);
         this.companhia = companhia;
-        this.numAssento = numAssento;
         this.numRota = r.nextInt(1000, 8000);
         this.quantAssentos++;
         this.avaliacoes = new ArrayList<>();
@@ -27,7 +26,6 @@ public class PassagemTerrestre extends Passagem{
     public void calculaPreco(){
             double valorTotal = getPreco();
 
-            valorTotal += calculaTarifa();
             super.setPreco(valorTotal);
     }
 
@@ -39,9 +37,17 @@ public class PassagemTerrestre extends Passagem{
         return false;
     }
 
+    public int getNumAssento() {
+        return numAssento;
+    }
+
+    public void setNumAssento(int numAssento) {
+        this.numAssento = numAssento;
+    }
+
     public void adicionarBagagemExtra(int quantidadeBags) {
 
-        double precoBagagemExtra = 50.0;
+        double precoBagagemExtra = 5.0;
         double precoTotalBagagemExtra = quantidadeBags * precoBagagemExtra;
         double novoPreco = super.getPreco() + precoTotalBagagemExtra;
         super.setPreco(novoPreco);

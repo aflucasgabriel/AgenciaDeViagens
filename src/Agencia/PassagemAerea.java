@@ -16,12 +16,11 @@ public class PassagemAerea extends Passagem{
     private int quantAssentos = 0;
     private List<String> avaliacoes;
 
-    public PassagemAerea(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco, String companhiaAerea, String classe, int numAssento) {
-        super(origem, destino, dataIda, dataVolta);
+    public PassagemAerea(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco, String companhiaAerea, int numAssento) {
+        super(origem, destino, dataIda, dataVolta, numAssento);
         this.companhiaAerea = companhiaAerea;
         this.classe = classe;
         this.numVoo = r.nextInt(1000 ,8000);
-        this.numAssento = numAssento;
         this.quantAssentos++;
         this.avaliacoes = new ArrayList<>();
 
@@ -31,11 +30,20 @@ public class PassagemAerea extends Passagem{
         return numVoo;
     }
 
+    public String getClasse() {
+        return classe;
+    }
+
+    public void setClasse(String classe) {
+        this.classe = classe;
+    }
+
+
 
     @Override
     public void calculaPreco(){
         double valorTotal = getPreco();
-        if (classe.equalsIgnoreCase("economica")){
+        if (getClasse().equalsIgnoreCase("economica")){
             valorTotal = super.getPreco() + (super.getPreco() * 0.5);
             valorTotal += calculaTarifa();
             super.setPreco(valorTotal);
@@ -47,6 +55,14 @@ public class PassagemAerea extends Passagem{
 
         }
 
+    }
+
+    public int getNumAssento() {
+        return numAssento;
+    }
+
+    public void setNumAssento(int numAssento) {
+        this.numAssento = numAssento;
     }
 
     @Override

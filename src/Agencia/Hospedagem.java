@@ -33,6 +33,17 @@ public class Hospedagem{
         this.PrecoDiario = PrecoDiario;
     }
 
+    public int getQuartosDisponiveis() {
+        return QuartosDisponiveis;
+    }
+
+    public void setQuartosDisponiveis(int quartosDisponiveis) {
+        QuartosDisponiveis = quartosDisponiveis;
+    }
+
+    public void setServicosInclusos(List<String> servicosInclusos) {
+        this.servicosInclusos = servicosInclusos;
+    }
 
     public String getNomeHotel() {
         return nomeHotel;
@@ -50,9 +61,10 @@ public class Hospedagem{
         return PrecoDiario;
     }
 
+
     //método calcular preço
 
-    public double calcularPreco() {
+    public double calcularPreco(int numDias) {
         return PrecoDiario * numDias;
     }
 

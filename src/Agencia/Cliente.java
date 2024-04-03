@@ -12,6 +12,9 @@ public class Cliente {
     private String email;
     private String senha;
     private Destino destinoEscolhido;
+    private Passagem passagemEscolhida;
+    private Hospedagem hospedagemEscolhida;
+    private Atracao atracaoEscolhida;
     private LocalDate dataNascimento;
     private ArrayList <Viagem> historicoViagens;
     private ArrayList <PreferenciaViagem> preferenciasViagens;
@@ -79,6 +82,30 @@ public class Cliente {
 
 //GET E SET
 
+
+    public Passagem getPassagemEscolhida() {
+        return passagemEscolhida;
+    }
+
+    public void setPassagemEscolhida(Passagem passagemEscolhida) {
+        this.passagemEscolhida = passagemEscolhida;
+    }
+
+    public Hospedagem getHospedagemEscolhida() {
+        return hospedagemEscolhida;
+    }
+
+    public void setHospedagemEscolhida(Hospedagem hospedagemEscolhida) {
+        this.hospedagemEscolhida = hospedagemEscolhida;
+    }
+
+    public Atracao getAtracaoEscolhida() {
+        return atracaoEscolhida;
+    }
+
+    public void setAtracaoEscolhida(Atracao atracaoEscolhida) {
+        this.atracaoEscolhida = atracaoEscolhida;
+    }
 
     public Destino getDestinoEscolhido() {
         return destinoEscolhido;
