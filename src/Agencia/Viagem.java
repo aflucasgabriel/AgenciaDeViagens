@@ -14,14 +14,14 @@ class Viagem {
         this.produto = produto;
     }
     //Métodos
-    private boolean viagemRequisitada = false;
+    private boolean viagemRequisitada = true;
 
     public void requisitarViagem() {
         if (viagemRequisitada) {
             System.out.println("Viagem requisitada com sucesso.");
         } else {
             System.out.println("Viagem não foi requisitada.");
-            viagemRequisitada = true;
+            viagemRequisitada = false;
         }
     }
 

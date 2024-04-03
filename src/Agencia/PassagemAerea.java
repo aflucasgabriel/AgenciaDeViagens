@@ -104,9 +104,8 @@ public class PassagemAerea extends Passagem{
     @Override
     public String relatorioPassagem(){
 
-        String relatorio = "Companhia Aera: " + companhiaAerea +
+        String relatorio = "Companhia: " + companhiaAerea +
         "\nOrigem: " + getOrigem() +
-        "\nDestino: " + getDestino() +
         "\nNumero Assento = " + numAssento +
         "\nData Ida: " + getDataIda() +
         "\nData Volta: " + getDataVolta() +

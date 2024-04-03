@@ -22,6 +22,7 @@ public class PassagemTerrestre extends Passagem{
         this.quantAssentos++;
         this.avaliacoes = new ArrayList<>();
         this.destino = destino;
+        this.numAssento = numAssento;
     }
 
     @Override
@@ -85,9 +86,8 @@ public class PassagemTerrestre extends Passagem{
     @Override
     public String relatorioPassagem(){
 
-        String relatorio = "Companhia Aera: " + companhia +
+        String relatorio = "Companhia: " + companhia +
                 "\nOrigem: " + getOrigem() +
-                "\nDestino: " + getDestino() +
                 "\nNumero Assento = " + numAssento +
                 "\nData Ida: " + getDataIda() +
                 "\nData Volta: " + getDataVolta() +

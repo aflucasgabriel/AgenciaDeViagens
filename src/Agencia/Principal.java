@@ -64,12 +64,12 @@ public class Principal {
                                     Destino[] dest = new Destino[7];
 
                                     dest[0] = new Destino("Paris", "Europa", "A cidade do Amor!", "Torre Eiffel, Arco do Triunfo", 2500);
-                                    dest[1] = new Destino("Los Angeles", "America do Norte", "A cidade da diversão!!", "Hollywood, cassinos!", 1265.99);
+                                    dest[1] = new Destino("Los Angeles", "USA", "A cidade da diversão!!", "Hollywood, cassinos!", 1265.99);
                                     dest[2] = new Destino("Lisboa", "Europa", "A cidade histórica!", "Castelo de São Jorge, Praias paradisíacas!", 1899.99);
-                                    dest[3] = new Destino("Ottawa", "America do Norte", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!", 679.59);
+                                    dest[3] = new Destino("Ottawa", "USA", "A cidade dos Festivais!!", "Colina do Parlamento, Inúmeros museus!", 679.59);
                                     dest[4] = new Destino("Atenas", "Europa", "A cidade eterna, repleta de história e arquitetura magnífica.", "Partenon, Acrópole!", 1689.89);
-                                    dest[5] = new Destino("Rio de Janeiro", "America do Sul", "A cidade maravilhosa! Repleta de história e belezas naturais!", "Copacabana, Cristo Redentor, Pão de Açucar", 245.89);
-                                    dest[6] = new Destino("Salvador", "America do Sul", "A capital da Alegria!", "Praia do Forte, Pelourinho", 250.99);
+                                    dest[5] = new Destino("Florianopolis", "Brasil", "A cidade maravilhosa! Repleta de história e belezas naturais!", "Praia de Joaquima, Praia Mole", 245.89);
+                                    dest[6] = new Destino("Salvador", "Brasil", "A capital da Alegria!", "Praia do Forte, Pelourinho", 250.99);
 
 
                                     System.out.println("Perfeito! Temos os seguintes destinos: ");
@@ -88,8 +88,9 @@ public class Principal {
                                             System.out.println("Descrição: " + dest[i].getDescricao());
                                             System.out.println("Preço: " + dest[i].getPreco());
 
+                                            Autenticacao.obterClienteLogado().setDestinoEscolhido(dest[i]);
                                         }
-                                        Autenticacao.obterClienteLogado().setDestinoEscolhido(dest[i]);
+
 
                                     }
 
@@ -103,7 +104,7 @@ public class Principal {
                                     double passTotalSal = taxaEmbarqueSal + (taxaEmbarqueSal * tarifaFixa);
                                     double tarifaAerea = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa;
 
-                                    if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getLocalizacao().equalsIgnoreCase("America do Sul")) {
+                                    if (Autenticacao.obterClienteLogado().getDestinoEscolhido().localizacao.equalsIgnoreCase("Brasil")) {
                                         System.out.println("Deseja viajar via Terrestre ou Aerea?");
                                         String transporte = sc.next();
 
@@ -113,7 +114,7 @@ public class Principal {
                                             sc.nextLine();
 
 
-                                            if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Rio de Janeiro")) {
+                                            if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Floarianopolis")) {
                                                 System.out.println("Guanabara - R$" + passTotalRio);
                                                 System.out.println("Rode Rotas - R$" + passTotalRio);
                                                 System.out.println("Platina - R$" + passTotalRio + "\n");
@@ -179,12 +180,13 @@ public class Principal {
                                             String classe = sc.next();
                                             sc.nextLine();
 
-                                            System.out.println("Por qual companhia deseja viajar? ");
+
                                             if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Rio de Janeiro")) {
                                                 double totalRio = (Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa) + Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
                                                 System.out.println("Latam - R$" + totalRio);
                                                 System.out.println("Azul - R$" + totalRio);
                                                 System.out.println("GOL - R$" + totalRio);
+                                                System.out.println("Por qual companhia deseja viajar? ");
                                                 companhia = sc.next();
                                                 sc.nextLine();
 
@@ -302,13 +304,10 @@ public class Principal {
                                             System.out.println("\nHotel: " + hosp[i].getNomeHotel());
                                             System.out.println("Endereço: " + hosp[i].getLocalizacao() + ", " + Autenticacao.obterClienteLogado().getDestinoEscolhido().getNome());
                                             System.out.println("Preço: " + hosp[i].getPrecoDiario());
-
+                                            Autenticacao.obterClienteLogado().setHospedagemEscolhida(hosp[i]);
                                         }
-                                        Autenticacao.obterClienteLogado().setHospedagemEscolhida(hosp[i]);
 
-                                        // Criando um produto com a hospedagem escolhida
-                                        //Produto produto = new Produto("Hospedagem", "Reserva de hospedagem de hotel", h.calcularPreco(), Produto.TipoProduto.HOSPEDAGEM);
-                                        //System.out.println("Produto criado: " + produto);
+
                                     }
                                     Autenticacao.obterClienteLogado().getHospedagemEscolhida().setNumDias(dias(dataIda, dataVolta));
                                     double total = Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco();
@@ -350,7 +349,7 @@ public class Principal {
                                             atracoes.add(at[i]);
                                         }
                                         System.out.println("Essas são as Atrações Pagas que você pode escolher!");
-                                        for (int i =0; i< at.length; i++){
+                                        for (int i = 0; i < at.length; i++) {
                                             System.out.println("===============================");
                                             System.out.println("Indice: " + i + "\nNome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
                                                     "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
@@ -398,28 +397,37 @@ public class Principal {
                                         System.out.println("R$ :" + precoTotal);
 
                                         Autenticacao.obterClienteLogado().setAtracaosEscolhidas(atracoesEscolhidas);
+                                    } else {
+                                        Autenticacao.obterClienteLogado().setAtracaosEscolhidas(null);
                                     }
 
                                     System.out.println("\nPerfeito! \nCompra finalizada!\nVamos revisar seu pedido!");
                                     System.out.println("=============Pedido=============");
-                                    Produto produto = new Produto("Pacote de Viagem", "Escolha de Passagem, Hospedagem e Atrações para uma viagem!", Autenticacao.obterClienteLogado().getPassagemEscolhida(), Autenticacao.obterClienteLogado().getHospedagemEscolhida(), Autenticacao.obterClienteLogado().getAtracaosEscolhidas());
+                                    Produto produto = new Produto("Pacote de Viagem", "Viagem para " + Autenticacao.obterClienteLogado().getDestinoEscolhido().getNome(), Autenticacao.obterClienteLogado().getPassagemEscolhida(), Autenticacao.obterClienteLogado().getHospedagemEscolhida(), Autenticacao.obterClienteLogado().getAtracaosEscolhidas());
 
                                     Viagem viagem = new Viagem(Autenticacao.obterClienteLogado(), produto);
                                     viagem.requisitarViagem();
                                     viagem.confirmarViagem();
+
+                                    Autenticacao.obterClienteLogado().adicionarViagemAoHistorico(viagem);
+
                                     System.out.println("==========================");
                                     System.out.println(Autenticacao.obterClienteLogado().getDestinoEscolhido().relatorioDestino());
                                     System.out.println("==========================");
                                     System.out.println(Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem());
                                     System.out.println("==========================");
                                     System.out.println(Autenticacao.obterClienteLogado().getPassagemEscolhida().relatorioPassagem());
-                                    for (Atracao a : atracao) {
-                                        System.out.println(a.relatorioAtracao());
+                                    if (Autenticacao.obterClienteLogado().getAtracaosEscolhidas() != null) {
+                                        for (Atracao a : atracao) {
+                                            System.out.println(a.relatorioAtracao());
+                                        }
                                     }
                                     double precoViagem = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco() +
                                             Autenticacao.obterClienteLogado().getPassagemEscolhida().getPreco();
-                                    for (Atracao a : Autenticacao.obterClienteLogado().getAtracaosEscolhidas()) {
-                                        precoViagem += a.getPreco();
+                                    if (Autenticacao.obterClienteLogado().getAtracaosEscolhidas() != null) {
+                                        for (Atracao a : Autenticacao.obterClienteLogado().getAtracaosEscolhidas()) {
+                                            precoViagem += a.getPreco();
+                                        }
                                     }
                                     System.out.println("==========================");
                                     System.out.println("Preço total viagem: R$ " + precoViagem);
@@ -453,12 +461,13 @@ public class Principal {
                                     hotelCarlton.add("Almoço e Janta");
                                     hotelCarlton.add("Estacionamento");
 
-                                    hosp[0] = new Hospedagem("Lotus", "Rua das Palmeiras, 103", dataCheckIn(), dataCheckOut(), 150, 15, hotelLotus);
-                                    hosp[1] = new Hospedagem("Savana", "Avenida Principal, 6384", dataCheckIn(), dataCheckOut(), 200, 3, hotelSavana);
-                                    hosp[2] = new Hospedagem("Carlton", "Avenida Doutor Hans Chucrute, 257", dataCheckIn(), dataCheckOut(), 300, 8, hotelCarlton);
+                                    hosp[0] = new Hospedagem("Lotus", "Rua das Palmeiras, 103", dataIdaH, dataVoltaH, 150, 15, hotelLotus);
+                                    hosp[1] = new Hospedagem("Savana", "Avenida Principal, 6384", dataIdaH, dataVoltaH, 200, 3, hotelSavana);
+                                    hosp[2] = new Hospedagem("Carlton", "Avenida Doutor Hans Chucrute, 257", dataIdaH, dataVoltaH, 300, 8, hotelCarlton);
 
 
                                     for (int i = 0; i < hosp.length; i++) {
+                                        System.out.println("===============================");
                                         System.out.println("Nome do Hotel: " + hosp[i].getNomeHotel() +
                                                 "\nPreço Diária: " + hosp[i].getPrecoDiario() + "\nServiços: " + hosp[i].getServicosInclusos());
                                     }
@@ -572,7 +581,17 @@ public class Principal {
 
                                     System.out.println("Bem vindo ao seu Histórito de Viagens!");
 
-                                    Autenticacao.obterClienteLogado().relatorio();
+                                    List<Viagem> historico = Autenticacao.obterClienteLogado().getHistoricoViagens();
+                                    double preco = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco() +
+                                            Autenticacao.obterClienteLogado().getPassagemEscolhida().getPreco();
+                                    if (Autenticacao.obterClienteLogado().getAtracaosEscolhidas() != null) {
+                                        for (Atracao a : Autenticacao.obterClienteLogado().getAtracaosEscolhidas()) {
+                                            preco += a.getPreco();
+                                        }
+                                    }
+                                    for (Viagem v : historico) {
+                                        System.out.println(v.getProduto().relatorio() + "\nPreço: R$ " + preco);
+                                    }
 
 
                                     break;

@@ -107,6 +107,7 @@ public class Produto {
             }
         }
 
+
         return total;
     }
 
@@ -114,9 +115,8 @@ public class Produto {
 
     public String relatorio() {
         return "Id=" + id +
-                "\nNome='" + nome +
-                "\nDescricao='" + descricao +
-                "\nPreco=" + calculaPreco();
+                "\nNome: " + nome +
+                "\nDescricao: " + descricao;
 
 
     }

@@ -143,4 +143,8 @@ public class Cliente {
     public void setPreferenciasViagens(ArrayList<PreferenciaViagem> preferenciasViagens) {
         this.preferenciasViagens = preferenciasViagens;
     }
+
+    public void adicionarViagemAoHistorico(Viagem viagem) {
+        historicoViagens.add(viagem);
+    }
 }
