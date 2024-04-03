@@ -550,17 +550,20 @@ public class Principal {
                                     at[7] = new AtracaoPaga("Esportes Radicais Premium", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes", Autenticacao.obterClienteLogado().getDestinoEscolhido());
                                     at[8] = new AtracaoGratuita("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes", Autenticacao.obterClienteLogado().getDestinoEscolhido());
 
-
+                                    System.out.println("Essas são as Atrações Gratuitas que você tem direito!");
                                     for (int i = 0; i < at.length; i++) {
                                         if (at[i] instanceof AtracaoGratuita) {
-                                            System.out.println("Essas são as Atrações Gratuitas que você tem direito!");
-                                            System.out.println("Nome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
-                                                    "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
-                                        } else {
-                                            System.out.println("Essas são as Atrações Pagas que você pode escolher!");
-                                            System.out.println("Nome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
+                                            System.out.println("===============================");
+                                            System.out.println("Indice: " + i + "\nNome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
                                                     "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
                                         }
+                                        atracoes.add(at[i]);
+                                    }
+                                    System.out.println("Essas são as Atrações Pagas que você pode escolher!");
+                                    for (int i = 0; i < at.length; i++) {
+                                        System.out.println("===============================");
+                                        System.out.println("Indice: " + i + "\nNome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
+                                                "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
                                         atracoes.add(at[i]);
                                     }
 
@@ -606,7 +609,8 @@ public class Principal {
 
                                     Autenticacao.obterClienteLogado().setAtracaosEscolhidas(atracoesEscolhidas);
 
-                                    Produto produtoAtr = new Produto("Compra de Atrações!", "Escolha de Atrações!", null, null, Autenticacao.obterClienteLogado().getAtracaosEscolhidas());
+
+                                    Produto produtoAtr = new Produto("Compra de Atrações!", "Atrações escolhidas!", null, null, Autenticacao.obterClienteLogado().getAtracaosEscolhidas());
 
                                     Viagem vAtracao = new Viagem(Autenticacao.obterClienteLogado(), produtoAtr);
 
@@ -616,17 +620,33 @@ public class Principal {
                                     System.out.println("Bem vindo ao seu Histórito de Viagens!");
 
                                     List<Viagem> historico = Autenticacao.obterClienteLogado().getHistoricoViagens();
-                                    double preco = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco() +
-                                            Autenticacao.obterClienteLogado().getPassagemEscolhida().getPreco();
+                                    if(Autenticacao.obterClienteLogado().getDestinoEscolhido() == null){
+                                        double pD = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
+                                        pD = 0;
+                                        double preco = pD + Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco() +
+                                                Autenticacao.obterClienteLogado().getPassagemEscolhida().getPreco();
+                                    } else if (Autenticacao.obterClienteLogado().getHospedagemEscolhida() == null) {
+                                    double pH = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
+                                    pH = 0;
+                                        double preco = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + pH +
+                                                Autenticacao.obterClienteLogado().getPassagemEscolhida().getPreco();
+                                    }else if(Autenticacao.obterClienteLogado().getPassagemEscolhida() == null) {
+                                        double pP = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
+                                        pP = 0;
+                                        double preco = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco() +
+                                                pP;
+
+
                                     if (Autenticacao.obterClienteLogado().getAtracaosEscolhidas() != null) {
                                         for (Atracao a : Autenticacao.obterClienteLogado().getAtracaosEscolhidas()) {
                                             preco += a.getPreco();
                                         }
                                     }
+
                                     for (Viagem v : historico) {
                                         System.out.println(v.getProduto().relatorio() + "\nPreço: R$ " + preco);
                                     }
-
+                            }
 
                                     break;
                                 case 5:
@@ -638,11 +658,11 @@ public class Principal {
                                         System.out.println("3 - Atrações");
                                         System.out.print("Opcao: ");
                                         opAv = sc.nextInt();
+                                        sc.nextLine();
 
                                         switch (opAv) {
                                             case 1:
-                                                System.out.println("Vamos avaliar como foi sua experiência!");
-                                                Autenticacao.obterClienteLogado().getPassagemEscolhida().relatorioPassagem();
+                                                System.out.println(Autenticacao.obterClienteLogado().getPassagemEscolhida().relatorioPassagem());
 
                                                 System.out.print("Escreva sua avaliação: ");
                                                 String avaliacaoP = sc.next();
@@ -653,7 +673,7 @@ public class Principal {
                                                 break;
                                             case 2:
                                                 System.out.println("Vamos avaliar como foi sua experiência!");
-                                                Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
+                                                System.out.println(Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem());
 
                                                 System.out.print("Escreva sua avaliação: ");
                                                 String avaliacaoH = sc.next();
@@ -665,7 +685,7 @@ public class Principal {
                                                 System.out.println("Vamos avaliar como foi sua experiência!");
 
                                                 for (int i = 0; i < Autenticacao.obterClienteLogado().getAtracaosEscolhidas().size(); i++) {
-                                                    Autenticacao.obterClienteLogado().getAtracaosEscolhidas().get(i).relatorioAtracao();
+                                                    System.out.println(Autenticacao.obterClienteLogado().getAtracaosEscolhidas().get(i).relatorioAtracao());
                                                 }
 
                                                 System.out.print("Escreva sua avaliação: ");
