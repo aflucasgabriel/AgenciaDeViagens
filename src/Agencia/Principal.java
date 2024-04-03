@@ -696,25 +696,5 @@ public class Principal {
         return diferenca;
     }
 
-
-
-    public static double calcularPrecoPassagem(String classe) {
-
-
-        double valorTotal;
-        if (classe.equalsIgnoreCase("economica")) {
-            valorTotal = obterClienteLogado().getDestinoEscolhido().getPreco() + (obterClienteLogado().getDestinoEscolhido().getPreco() * 0.5);
-            return valorTotal;
-
-        } else if (classe.equalsIgnoreCase("executiva")) {
-            valorTotal = obterClienteLogado().getDestinoEscolhido().getPreco() + (obterClienteLogado().getDestinoEscolhido().getPreco() * 1.2);
-            valorTotal += calculaTarifa();
-            return valorTotal;
-
-        }
-
-        return valorTotal;
-    }
-
 }
 
