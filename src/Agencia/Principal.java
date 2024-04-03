@@ -28,6 +28,8 @@ public class Principal {
         Scanner sc = new Scanner(System.in);
         int op = 0, op1 = 0, op2 = 0;
 
+        System.out.println("Seja bem vindo(a) a RotaGlobal, a melhor escolha em Agencia de Viagens!\n");
+
         do {
             System.out.println("=========Menu=========");
             System.out.println("1 - Login");
@@ -39,6 +41,7 @@ public class Principal {
 
             switch (op) {
                 case 1:
+
                     if (loginCliente(cl)) {
                         do {
                             System.out.println("=========Menu=========");
@@ -54,6 +57,7 @@ public class Principal {
 
                             switch (op1) {
                                 case 1:
+
                                     LocalDate dataIda = dataCheckIn();
                                     LocalDate dataVolta = dataCheckOut();
 
@@ -70,7 +74,8 @@ public class Principal {
 
                                     System.out.println("Perfeito! Temos os seguintes destinos: ");
                                     for (int i = 0; i < dest.length; i++) {
-                                        System.out.println("Destino: " + dest[i].getNome() + "\nLocalização" + dest[i].localizacao + "\nDescrição: " + dest[i].getDescricao() + "\nPontos Turísticos: " + dest[i].pontosTuristicos + "\nPreço: R$ " + dest[i].getPreco());
+                                        System.out.println("===============================");
+                                        System.out.println("Destino: " + dest[i].getNome() + "\nLocalização: " + dest[i].localizacao + "\nDescrição: " + dest[i].getDescricao() + "\nPontos Turísticos: " + dest[i].pontosTuristicos + "\nPreço: R$ " + dest[i].getPreco() + "\n");
                                     }
                                     System.out.print("Qual deseja escolher?(Digite o nome: ): ");
                                     String destino = sc.next();
@@ -78,12 +83,13 @@ public class Principal {
 
                                     for (int i = 0; i < dest.length; i++) {
                                         if (dest[i].getNome().equalsIgnoreCase(destino)) {
+                                            System.out.println("===============================");
                                             System.out.println("Destino: " + dest[i].getNome());
                                             System.out.println("Descrição: " + dest[i].getDescricao());
                                             System.out.println("Preço: " + dest[i].getPreco());
 
                                         }
-                                        obterClienteLogado().setDestinoEscolhido(dest[i]);
+                                        Autenticacao.obterClienteLogado().setDestinoEscolhido(dest[i]);
 
                                     }
 
@@ -91,27 +97,29 @@ public class Principal {
                                     System.out.println("Excelente escolha!");
                                     System.out.println("Agora vamos escolher sua passagem!");
                                     String companhia;
-                                    double taxaEmbarqueRio = obterClienteLogado().getDestinoEscolhido().getPreco() + 100.0;
-                                    double taxaEmbarqueSal = obterClienteLogado().getDestinoEscolhido().getPreco() + 200.0;
+                                    double taxaEmbarqueRio = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + 100.0;
+                                    double taxaEmbarqueSal = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + 200.0;
                                     double passTotalRio = taxaEmbarqueRio + (taxaEmbarqueRio * tarifaFixa);
                                     double passTotalSal = taxaEmbarqueSal + (taxaEmbarqueSal * tarifaFixa);
-                                    double tarifaAerea = obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa;
+                                    double tarifaAerea = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa;
 
-                                    if (obterClienteLogado().getDestinoEscolhido().getLocalizacao().equalsIgnoreCase("America do Sul")) {
+                                    if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getLocalizacao().equalsIgnoreCase("America do Sul")) {
                                         System.out.println("Deseja viajar via Terrestre ou Aerea?");
                                         String transporte = sc.next();
 
                                         if (transporte.equalsIgnoreCase("Terrestre")) {
                                             System.out.print("\nQual a origem?: ");
                                             String origem = sc.next();
+                                            sc.nextLine();
 
 
-                                            System.out.println("Por qual companhia deseja viajar? ");
-                                            if (obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Rio de Janeiro")) {
+                                            if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Rio de Janeiro")) {
                                                 System.out.println("Guanabara - R$" + passTotalRio);
                                                 System.out.println("Rode Rotas - R$" + passTotalRio);
                                                 System.out.println("Platina - R$" + passTotalRio + "\n");
+                                                System.out.println("Por qual companhia deseja viajar? ");
                                                 companhia = sc.next();
+                                                sc.nextLine();
 
 
                                                 System.out.print("Qual assento deseja reservar?(1 a 60): ");
@@ -119,20 +127,25 @@ public class Principal {
 
                                                 System.out.println("Deseja adicionar bagagem extra? R$5.00 por bagagem extra(s/n) ");
                                                 String bag = sc.next();
+                                                sc.nextLine();
 
                                                 if (bag.equalsIgnoreCase("s")) {
                                                     System.out.print("Quantas bagagens extras deseja adicionar?: ");
                                                     int quantBag = sc.nextInt();
 
-                                                    passagemT = new PassagemTerrestre(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, passTotalRio, companhia, assento);
+                                                    passagemT = new PassagemTerrestre(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, passTotalRio, companhia, assento);
                                                     passagemT.adicionarBagagemExtra(quantBag);
                                                     passagem.add(passagemT);
+
+                                                    Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemT);
                                                 }
-                                            } else if (obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Salvador")) {
+                                            } else if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Salvador")) {
                                                 System.out.println("Guanabara - R$" + passTotalSal);
                                                 System.out.println("Rode Rotas - R$" + passTotalSal);
                                                 System.out.println("Platina - R$" + passTotalSal);
+                                                System.out.println("Por qual companhia deseja viajar? ");
                                                 companhia = sc.next();
+                                                sc.nextLine();
 
 
                                                 System.out.print("Qual assento deseja reservar?(1 a 60): ");
@@ -140,19 +153,21 @@ public class Principal {
 
                                                 System.out.println("Deseja adicionar bagagem extra? R$5.00 por bagagem extra(s/n) ");
                                                 String bag = sc.next();
+                                                sc.nextLine();
 
                                                 if (bag.equalsIgnoreCase("s")) {
                                                     System.out.print("Quantas bagagens extras deseja adicionar?: ");
                                                     int quantBag = sc.nextInt();
 
-                                                    passagemT = new PassagemTerrestre(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, passTotalSal, companhia, assento);
+                                                    passagemT = new PassagemTerrestre(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, passTotalSal, companhia, assento);
                                                     passagemT.adicionarBagagemExtra(quantBag);
                                                     passagem.add(passagemT);
-
+                                                    Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemT);
 
                                                 } else {
-                                                    passagemT = new PassagemTerrestre(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, passTotalSal, companhia, assento);
+                                                    passagemT = new PassagemTerrestre(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, passTotalSal, companhia, assento);
                                                     passagem.add(passagemT);
+                                                    Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemT);
 
                                                 }
                                             }
@@ -162,14 +177,16 @@ public class Principal {
 
                                             System.out.println("Qual classe deseja viajar? (Economica/Executiva)");
                                             String classe = sc.next();
+                                            sc.nextLine();
 
                                             System.out.println("Por qual companhia deseja viajar? ");
-                                            if (obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Rio de Janeiro")) {
-                                                double totalRio = (obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa) + obterClienteLogado().getDestinoEscolhido().getPreco();
+                                            if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getNome().equalsIgnoreCase("Rio de Janeiro")) {
+                                                double totalRio = (Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa) + Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
                                                 System.out.println("Latam - R$" + totalRio);
                                                 System.out.println("Azul - R$" + totalRio);
                                                 System.out.println("GOL - R$" + totalRio);
                                                 companhia = sc.next();
+                                                sc.nextLine();
 
 
                                                 System.out.print("Qual assento deseja reservar?(1 a 60): ");
@@ -177,19 +194,24 @@ public class Principal {
 
                                                 System.out.println("Deseja adicionar bagagem extra? R$50.00 por bagagem extra(s/n) ");
                                                 String bag = sc.next();
+                                                sc.nextLine();
 
                                                 if (bag.equalsIgnoreCase("s")) {
                                                     System.out.print("Quantas bagagens extras deseja adicionar?: ");
                                                     int quantBag = sc.nextInt();
 
-                                                    passagemA = new PassagemAerea(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento);
+                                                    passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento);
                                                     passagemA.calculaPreco();
                                                     passagemA.adicionarBagagemExtra(quantBag);
                                                     passagem.add(passagemA);
+
+                                                    Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemA);
                                                 } else {
-                                                    passagemA = new PassagemAerea(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento);
+                                                    passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento);
                                                     passagemA.calculaPreco();
                                                     passagem.add(passagemA);
+
+                                                    Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemA);
                                                 }
                                             }
                                         }
@@ -201,14 +223,16 @@ public class Principal {
 
                                         System.out.println("Qual classe deseja viajar? (Economica/Executiva)");
                                         String classe = sc.next();
+                                        sc.nextLine();
 
                                         System.out.println("Por qual companhia deseja viajar? ");
-                                        if (obterClienteLogado().getDestinoEscolhido().getLocalizacao().equalsIgnoreCase("America do Norte")) {
-                                            double totalAme = (obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa) + obterClienteLogado().getDestinoEscolhido().getPreco();
+                                        if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getLocalizacao().equalsIgnoreCase("America do Norte")) {
+                                            double totalAme = (Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa) + Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
                                             System.out.println("Latam - R$" + totalAme);
                                             System.out.println("Azul - R$" + totalAme);
                                             System.out.println("GOL - R$" + totalAme);
                                             companhia = sc.next();
+                                            sc.nextLine();
 
 
                                             System.out.print("Qual assento deseja reservar?(1 a 60): ");
@@ -221,14 +245,18 @@ public class Principal {
                                                 System.out.print("Quantas bagagens extras deseja adicionar?: ");
                                                 int quantBag = sc.nextInt();
 
-                                                passagemA = new PassagemAerea(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento);
+                                                passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento);
                                                 passagemA.calculaPreco();
                                                 passagemA.adicionarBagagemExtra(quantBag);
                                                 passagem.add(passagemA);
+
+                                                Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemA);
                                             } else {
-                                                passagemA = new PassagemAerea(origem, obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento);
+                                                passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento);
                                                 passagemA.calculaPreco();
                                                 passagem.add(passagemA);
+
+                                                Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemA);
                                             }
                                         }
                                     }
@@ -254,12 +282,13 @@ public class Principal {
                                     servicosHotelCarlton.add("Estacionamento");
 
                                     hosp = new Hospedagem[3];
-                                    hosp[0] = new Hospedagem("Lotus", "Rua das Palmeiras, 103", dataCheckIn(), dataCheckOut(), 150, 15, servicosHotelLotus);
-                                    hosp[1] = new Hospedagem("Savana", "Avenida Principal, 6384", dataCheckIn(), dataCheckOut(), 200, 3, servicosHotelSavana);
-                                    hosp[2] = new Hospedagem("Carlton", "Avenida Doutor Hans Chucrute, 257", dataCheckIn(), dataCheckOut(), 300, 8, servicosHotelCarlton);
+                                    hosp[0] = new Hospedagem("Lotus", "Rua das Palmeiras, 103", dataIda, dataVolta, 150, 15, servicosHotelLotus);
+                                    hosp[1] = new Hospedagem("Savana", "Avenida Principal, 6384", dataIda, dataVolta, 200, 3, servicosHotelSavana);
+                                    hosp[2] = new Hospedagem("Carlton", "Avenida Doutor Hans Chucrute, 257", dataIda, dataVolta, 300, 8, servicosHotelCarlton);
 
 
                                     for (int i = 0; i < hosp.length; i++) {
+                                        System.out.println("===============================");
                                         System.out.println("Nome do Hotel: " + hosp[i].getNomeHotel() +
                                                 "\nPreço Diária: " + hosp[i].getPrecoDiario() + "\nServiços: " + hosp[i].getServicosInclusos());
                                     }
@@ -270,30 +299,30 @@ public class Principal {
 
                                     for (int i = 0; i < hosp.length; i++) {
                                         if (hosp[i].getNomeHotel().equalsIgnoreCase(hotel)) {
-                                            System.out.println("Destino: " + hosp[i].getNomeHotel());
-                                            System.out.println("Endereço: " + hosp[i].getLocalizacao());
+                                            System.out.println("\nHotel: " + hosp[i].getNomeHotel());
+                                            System.out.println("Endereço: " + hosp[i].getLocalizacao() + ", " + Autenticacao.obterClienteLogado().getDestinoEscolhido().getNome());
                                             System.out.println("Preço: " + hosp[i].getPrecoDiario());
 
                                         }
-                                        obterClienteLogado().setHospedagemEscolhida(hosp[i]);
+                                        Autenticacao.obterClienteLogado().setHospedagemEscolhida(hosp[i]);
 
                                         // Criando um produto com a hospedagem escolhida
                                         //Produto produto = new Produto("Hospedagem", "Reserva de hospedagem de hotel", h.calcularPreco(), Produto.TipoProduto.HOSPEDAGEM);
                                         //System.out.println("Produto criado: " + produto);
                                     }
-                                    obterClienteLogado().getHospedagemEscolhida().setNumDias(dias());
-                                    double total = obterClienteLogado().getHospedagemEscolhida().calcularPreco();
-                                    Hospedagem hosped = new Hospedagem(obterClienteLogado().getHospedagemEscolhida().getNomeHotel(), obterClienteLogado().getHospedagemEscolhida().getLocalizacao(), dataIda, dataVolta, obterClienteLogado().getHospedagemEscolhida().getPrecoDiario(), obterClienteLogado().getHospedagemEscolhida().getQuartosDisponiveis(), obterClienteLogado().getHospedagemEscolhida().getServicosInclusos());
+                                    Autenticacao.obterClienteLogado().getHospedagemEscolhida().setNumDias(dias(dataIda, dataVolta));
+                                    double total = Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco();
+                                    Hospedagem hosped = new Hospedagem(Autenticacao.obterClienteLogado().getHospedagemEscolhida().getNomeHotel(), Autenticacao.obterClienteLogado().getHospedagemEscolhida().getLocalizacao(), dataIda, dataVolta, Autenticacao.obterClienteLogado().getHospedagemEscolhida().getPrecoDiario(), Autenticacao.obterClienteLogado().getHospedagemEscolhida().getQuartosDisponiveis(), Autenticacao.obterClienteLogado().getHospedagemEscolhida().getServicosInclusos());
                                     hospedagem.add(hosped);
                                     System.out.println("Total da Hospedagem: R$" + total);
 
                                     System.out.println("Excelente escolha!");
 
-                                    System.out.print("Deseja incluir atrações na sua viagem?\nTemos atrações como museus, restaurantes, cachoeiras etc(sim/nao): ");
-                                    String escolhaAtracao = sc.nextLine();
-                                    sc.nextLine();
+                                    System.out.println("Deseja incluir atrações na sua viagem?\nTemos atrações como museus, restaurantes, cachoeiras etc(sim/nao): ");
+                                    String escolhaAtracao = sc.next();
 
-                                    if (escolhaAtracao.equals("sim")) {
+
+                                    if (escolhaAtracao.equalsIgnoreCase("sim")) {
 
                                         System.out.println("Vamos às atrações que você pode adquirir!");
 
@@ -301,27 +330,30 @@ public class Principal {
 
                                         Atracao[] at = new Atracao[9];
 
-                                        at[0] = new AtracaoPaga("Pontos Turísticos Premium", "Um passeio incrível por todos os pontos turísticos da cidade!", "8h às 15h", 150, "Ponto Turistico", obterClienteLogado().getDestinoEscolhido());
-                                        at[1] = new AtracaoGratuita("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural", obterClienteLogado().getDestinoEscolhido());
-                                        at[2] = new AtracaoPaga("Teatros, Concertos e Óperas Premium", "Ingressos para eventos culturais que estão acontecendo na cidade!", "15h às 23h", 200, "Cultural", obterClienteLogado().getDestinoEscolhido());
-                                        at[3] = new AtracaoPaga("Restaurantes Premium", "Uma mesa reservada nos 2 melhores restaurantes para você conhecer a culinária local!", "17h às 23h", 80, "Gastronômico", obterClienteLogado().getDestinoEscolhido());
-                                        at[4] = new AtracaoGratuita("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico", obterClienteLogado().getDestinoEscolhido());
-                                        at[5] = new AtracaoGratuita("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza", obterClienteLogado().getDestinoEscolhido());
-                                        at[6] = new AtracaoPaga("Spa Premium", "Quer algo mais tranquilo pra relaxar? Um dia de spa para você!", "8h às 21h", 100, "Bem estar", obterClienteLogado().getDestinoEscolhido());
-                                        at[7] = new AtracaoPaga("Esportes Radicais Premium", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes", obterClienteLogado().getDestinoEscolhido());
-                                        at[8] = new AtracaoGratuita("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes", obterClienteLogado().getDestinoEscolhido());
+                                        at[0] = new AtracaoPaga("Pontos Turísticos Premium", "Um passeio incrível por todos os pontos turísticos da cidade!", "8h às 15h", 150, "Ponto Turistico", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                        at[1] = new AtracaoGratuita("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                        at[2] = new AtracaoPaga("Teatros, Concertos e Óperas Premium", "Ingressos para eventos culturais que estão acontecendo na cidade!", "15h às 23h", 200, "Cultural", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                        at[3] = new AtracaoPaga("Restaurantes Premium", "Uma mesa reservada nos 2 melhores restaurantes para você conhecer a culinária local!", "17h às 23h", 80, "Gastronômico", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                        at[4] = new AtracaoGratuita("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                        at[5] = new AtracaoGratuita("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                        at[6] = new AtracaoPaga("Spa Premium", "Quer algo mais tranquilo pra relaxar? Um dia de spa para você!", "8h às 21h", 100, "Bem estar", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                        at[7] = new AtracaoPaga("Esportes Radicais Premium", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                        at[8] = new AtracaoGratuita("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes", Autenticacao.obterClienteLogado().getDestinoEscolhido());
 
-
+                                        System.out.println("Essas são as Atrações Gratuitas que você tem direito!");
                                         for (int i = 0; i < at.length; i++) {
                                             if (at[i] instanceof AtracaoGratuita) {
-                                                System.out.println("Essas são as Atrações Gratuitas que você tem direito!");
-                                                System.out.println("Nome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
-                                                        "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
-                                            } else {
-                                                System.out.println("Essas são as Atrações Pagas que você pode escolher!");
-                                                System.out.println("Nome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
+                                                System.out.println("===============================");
+                                                System.out.println("Indice: " + i + "\nNome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
                                                         "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
                                             }
+                                            atracoes.add(at[i]);
+                                        }
+                                        System.out.println("Essas são as Atrações Pagas que você pode escolher!");
+                                        for (int i =0; i< at.length; i++){
+                                            System.out.println("===============================");
+                                            System.out.println("Indice" + i + "\nNome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
+                                                    "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
                                             atracoes.add(at[i]);
                                         }
 
@@ -341,7 +373,7 @@ public class Principal {
                                                     Atracao atracaoEscolhida = atracoes.get(indiceEscolhido);
                                                     if (atracaoEscolhida.verificarDisponibilidade()) {
                                                         atracoesEscolhidas.add(atracaoEscolhida);
-                                                    }else{
+                                                    } else {
                                                         System.out.println("Desculpe, Atração Indisponível!");
                                                     }
                                                 } else {
@@ -365,19 +397,19 @@ public class Principal {
                                         System.out.println("-----Preço total das atrações-----");
                                         System.out.println("R$ :" + precoTotal);
 
-                                        obterClienteLogado().setAtracaosEscolhidas(atracoesEscolhidas);
+                                        Autenticacao.obterClienteLogado().setAtracaosEscolhidas(atracoesEscolhidas);
                                     }
 
-                                    System.out.println("Perfeito! \nCompra finalizada!\nVamos revisar seu pedido!");
-                                    Produto produto = new Produto("Pacote de Viagem", "Escolha de Passagem, Hospedagem e Atrações para uma viagem!", obterClienteLogado().getPassagemEscolhida(), obterClienteLogado().getHospedagemEscolhida(), obterClienteLogado().getAtracaosEscolhidas());
-                                    obterClienteLogado().getDestinoEscolhido().relatorioDestino();
-                                    obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
-                                    obterClienteLogado().getPassagemEscolhida().relatorioPassagem();
-                                    for (Atracao a : atracao){
+                                    System.out.println("\nPerfeito! \nCompra finalizada!\nVamos revisar seu pedido!");
+                                    Produto produto = new Produto("Pacote de Viagem", "Escolha de Passagem, Hospedagem e Atrações para uma viagem!", Autenticacao.obterClienteLogado().getPassagemEscolhida(), Autenticacao.obterClienteLogado().getHospedagemEscolhida(), Autenticacao.obterClienteLogado().getAtracaosEscolhidas());
+                                    Autenticacao.obterClienteLogado().getDestinoEscolhido().relatorioDestino();
+                                    Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
+                                    Autenticacao.obterClienteLogado().getPassagemEscolhida().relatorioPassagem();
+                                    for (Atracao a : atracao) {
                                         a.relatorioAtracao();
                                     }
 
-                                    Viagem viagem = new Viagem(obterClienteLogado(), produto);
+                                    Viagem viagem = new Viagem(Autenticacao.obterClienteLogado(), produto);
 
                                     System.out.println("Obrigado por comprar com a gente! Volte Sempre!!");
 
@@ -428,19 +460,19 @@ public class Principal {
                                             System.out.println("Preço: " + hosp[i].getPrecoDiario());
 
                                         }
-                                        obterClienteLogado().setHospedagemEscolhida(hosp[i]);
+                                        Autenticacao.obterClienteLogado().setHospedagemEscolhida(hosp[i]);
 
                                     }
-                                    obterClienteLogado().getHospedagemEscolhida().setNumDias(dias());
-                                    double totalA = obterClienteLogado().getHospedagemEscolhida().calcularPreco();
-                                    Hospedagem hospeda = new Hospedagem(obterClienteLogado().getHospedagemEscolhida().getNomeHotel(), obterClienteLogado().getHospedagemEscolhida().getLocalizacao(), dataIdaH, dataVoltaH, obterClienteLogado().getHospedagemEscolhida().getPrecoDiario(), obterClienteLogado().getHospedagemEscolhida().getQuartosDisponiveis(), obterClienteLogado().getHospedagemEscolhida().getServicosInclusos());
+                                    Autenticacao.obterClienteLogado().getHospedagemEscolhida().setNumDias(dias(dataIdaH, dataVoltaH));
+                                    double totalA = Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco();
+                                    Hospedagem hospeda = new Hospedagem(Autenticacao.obterClienteLogado().getHospedagemEscolhida().getNomeHotel(), Autenticacao.obterClienteLogado().getHospedagemEscolhida().getLocalizacao(), dataIdaH, dataVoltaH, Autenticacao.obterClienteLogado().getHospedagemEscolhida().getPrecoDiario(), Autenticacao.obterClienteLogado().getHospedagemEscolhida().getQuartosDisponiveis(), Autenticacao.obterClienteLogado().getHospedagemEscolhida().getServicosInclusos());
                                     hospedagem.add(hospeda);
                                     System.out.println("Total da Hospedagem: R$" + totalA);
 
-                                    Produto produtoHosp = new Produto("Hospedagem", "Escolha de uma hospedagem", null, obterClienteLogado().getHospedagemEscolhida(), null);
-                                    Viagem vHosp = new Viagem(obterClienteLogado(), produtoHosp);
+                                    Produto produtoHosp = new Produto("Hospedagem", "Escolha de uma hospedagem", null, Autenticacao.obterClienteLogado().getHospedagemEscolhida(), null);
+                                    Viagem vHosp = new Viagem(Autenticacao.obterClienteLogado(), produtoHosp);
 
-                                    obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
+                                    Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
 
                                     System.out.println("\nExcelente escolha! Volte sempre!");
                                     break;
@@ -451,15 +483,15 @@ public class Principal {
 
                                     Atracao[] at = new Atracao[9];
 
-                                    at[0] = new AtracaoPaga("Pontos Turísticos Premium", "Um passeio incrível por todos os pontos turísticos da cidade!", "8h às 15h", 150, "Ponto Turistico", obterClienteLogado().getDestinoEscolhido());
-                                    at[1] = new AtracaoGratuita("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural", obterClienteLogado().getDestinoEscolhido());
-                                    at[2] = new AtracaoPaga("Teatros, Concertos e Óperas Premium", "Ingressos para eventos culturais que estão acontecendo na cidade!", "15h às 23h", 200, "Cultural", obterClienteLogado().getDestinoEscolhido());
-                                    at[3] = new AtracaoPaga("Restaurantes Premium", "Uma mesa reservada nos 2 melhores restaurantes para você conhecer a culinária local!", "17h às 23h", 80, "Gastronômico", obterClienteLogado().getDestinoEscolhido());
-                                    at[4] = new AtracaoGratuita("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico", obterClienteLogado().getDestinoEscolhido());
-                                    at[5] = new AtracaoGratuita("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza", obterClienteLogado().getDestinoEscolhido());
-                                    at[6] = new AtracaoPaga("Spa Premium", "Quer algo mais tranquilo pra relaxar? Um dia de spa para você!", "8h às 21h", 100, "Bem estar", obterClienteLogado().getDestinoEscolhido());
-                                    at[7] = new AtracaoPaga("Esportes Radicais Premium", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes", obterClienteLogado().getDestinoEscolhido());
-                                    at[8] = new AtracaoGratuita("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes", obterClienteLogado().getDestinoEscolhido());
+                                    at[0] = new AtracaoPaga("Pontos Turísticos Premium", "Um passeio incrível por todos os pontos turísticos da cidade!", "8h às 15h", 150, "Ponto Turistico", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                    at[1] = new AtracaoGratuita("Museus, Exposições de arte e Feiras de artesanato", "Roteiro de passeios culturais ideal para conhecer a cultura da cidade!", "13h às 22h", 120, "Cultural", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                    at[2] = new AtracaoPaga("Teatros, Concertos e Óperas Premium", "Ingressos para eventos culturais que estão acontecendo na cidade!", "15h às 23h", 200, "Cultural", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                    at[3] = new AtracaoPaga("Restaurantes Premium", "Uma mesa reservada nos 2 melhores restaurantes para você conhecer a culinária local!", "17h às 23h", 80, "Gastronômico", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                    at[4] = new AtracaoGratuita("Padarias e Cafes", "Um guia das melhores padarias e cafés para você apreciar!", "6h às 18h", 150, "Gastronômico", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                    at[5] = new AtracaoGratuita("Cachoeiras, Parques, Praias", "Um rolê mais natural? Que tal visitar as belezas naturais da cidade?", "8h às 15h", 250, "Natureza", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                    at[6] = new AtracaoPaga("Spa Premium", "Quer algo mais tranquilo pra relaxar? Um dia de spa para você!", "8h às 21h", 100, "Bem estar", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                    at[7] = new AtracaoPaga("Esportes Radicais Premium", "Um roteiro com os melhores pontos de esportes radicais presentes na cidade!", "6h às 16h", 80, "Esportes", Autenticacao.obterClienteLogado().getDestinoEscolhido());
+                                    at[8] = new AtracaoGratuita("Aventura", "Ideal para você que curte um paraquedismo ou uma tirolesa!", "8h às 15h", 250, "Esportes", Autenticacao.obterClienteLogado().getDestinoEscolhido());
 
 
                                     for (int i = 0; i < at.length; i++) {
@@ -491,7 +523,7 @@ public class Principal {
                                                 Atracao atracaoEscolhida = atracoes.get(indiceEscolhido);
                                                 if (atracaoEscolhida.verificarDisponibilidade()) {
                                                     atracoesEscolhidas.add(atracaoEscolhida);
-                                                }else{
+                                                } else {
                                                     System.out.println("Desculpe, Atração Indisponível!");
                                                 }
                                             } else {
@@ -515,18 +547,18 @@ public class Principal {
                                     System.out.println("-----Preço total das atrações-----");
                                     System.out.println("R$ :" + precoTotal);
 
-                                    obterClienteLogado().setAtracaosEscolhidas(atracoesEscolhidas);
+                                    Autenticacao.obterClienteLogado().setAtracaosEscolhidas(atracoesEscolhidas);
 
-                                    Produto produtoAtr = new Produto("Compra de Atrações!", "Escolha de Atrações!", null, null, obterClienteLogado().getAtracaosEscolhidas());
+                                    Produto produtoAtr = new Produto("Compra de Atrações!", "Escolha de Atrações!", null, null, Autenticacao.obterClienteLogado().getAtracaosEscolhidas());
 
-                                    Viagem vAtracao = new Viagem(obterClienteLogado(), produtoAtr);
+                                    Viagem vAtracao = new Viagem(Autenticacao.obterClienteLogado(), produtoAtr);
 
                                     break;
                                 case 4:
 
                                     System.out.println("Bem vindo ao seu Histórito de Viagens!");
 
-                                        obterClienteLogado().relatorio();
+                                    Autenticacao.obterClienteLogado().relatorio();
 
 
                                     break;
@@ -540,46 +572,46 @@ public class Principal {
                                         System.out.print("Opcao: ");
                                         opAv = sc.nextInt();
 
-                                        switch (opAv){
+                                        switch (opAv) {
                                             case 1:
                                                 System.out.println("Vamos avaliar como foi sua experiência!");
-                                                obterClienteLogado().getPassagemEscolhida().relatorioPassagem();
+                                                Autenticacao.obterClienteLogado().getPassagemEscolhida().relatorioPassagem();
 
                                                 System.out.print("Escreva sua avaliação: ");
                                                 String avaliacaoP = sc.next();
 
-                                                obterClienteLogado().getPassagemEscolhida().relatorioAvaliacao(avaliacaoP);
+                                                Autenticacao.obterClienteLogado().getPassagemEscolhida().relatorioAvaliacao(avaliacaoP);
 
 
                                                 break;
                                             case 2:
                                                 System.out.println("Vamos avaliar como foi sua experiência!");
-                                                obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
+                                                Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
 
                                                 System.out.print("Escreva sua avaliação: ");
                                                 String avaliacaoH = sc.next();
 
-                                                obterClienteLogado().getHospedagemEscolhida().relatorioAvaliacao(avaliacaoH);
+                                                Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioAvaliacao(avaliacaoH);
 
                                                 break;
                                             case 3:
                                                 System.out.println("Vamos avaliar como foi sua experiência!");
 
-                                                for(int i = 0; i < obterClienteLogado().getAtracaosEscolhidas().size(); i++){
-                                                    obterClienteLogado().getAtracaosEscolhidas().get(i).relatorioAtracao();
+                                                for (int i = 0; i < Autenticacao.obterClienteLogado().getAtracaosEscolhidas().size(); i++) {
+                                                    Autenticacao.obterClienteLogado().getAtracaosEscolhidas().get(i).relatorioAtracao();
                                                 }
 
                                                 System.out.print("Escreva sua avaliação: ");
                                                 String avaliacaoA = sc.next();
 
-                                                for (int i = 0; i < obterClienteLogado().getAtracaosEscolhidas().size(); i++){
-                                                    obterClienteLogado().getAtracaosEscolhidas().get(i).relatorioAvaliacao(avaliacaoA);
+                                                for (int i = 0; i < Autenticacao.obterClienteLogado().getAtracaosEscolhidas().size(); i++) {
+                                                    Autenticacao.obterClienteLogado().getAtracaosEscolhidas().get(i).relatorioAvaliacao(avaliacaoA);
                                                 }
 
                                                 break;
                                         }
 
-                                    }while(opAv != 0);
+                                    } while (opAv != 0);
                                     break;
                             }
                         } while (op1 != 0);
@@ -631,26 +663,20 @@ public class Principal {
     public static boolean loginCliente(ArrayList<Cliente> cl) {
         Scanner sc = new Scanner(System.in);
 
+        System.out.print("Digite seu email: ");
+        String email = sc.next();
+        System.out.print("Digite sua senha: ");
+        String senha = sc.next();
 
-        try {
-            System.out.print("Digite seu email: ");
-            String email = sc.next();
-            System.out.print("Digite sua senha: ");
-            String senha = sc.next();
+        if (Autenticacao.fazerLogin(email, senha, cl)) {
+            System.out.println("Login Efetuado!");
 
-            if (verificaCredenciais(email, senha, cl)) {
-                System.out.println("Login Efetuado!");
-
-                return true;
-            } else {
-                throw new IllegalArgumentException("Email ou senha incorretos!");
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("ERRO! Email ou senha incorretos!" + e.getMessage());
-            sc.nextLine();
-            return false;
+            return true;
+        } else {
+            System.out.println("Email ou senha incorretos!");
         }
 
+        return false;
     }
 
 
@@ -671,7 +697,6 @@ public class Principal {
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        System.out.println("Que bom que escolheu planejar sua viagem com a gente!");
         System.out.println("Qual data de ida? (Formato DD/MM/YYYY): ");
         String dataIdaString = sc.nextLine();
 
@@ -683,14 +708,14 @@ public class Principal {
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        System.out.println("Qual data de ida? (Formato DD/MM/YYYY): ");
+        System.out.println("Qual data de volta? (Formato DD/MM/YYYY): ");
         String dataVoltaString = sc.nextLine();
 
         return LocalDate.parse(dataVoltaString, formatar);
     }
 
-    public static int dias() {
-        long diferencaEmDias = Math.abs(ChronoUnit.DAYS.between(dataCheckIn(), dataCheckOut()));
+    public static int dias(LocalDate dataIda, LocalDate dataVolta) {
+        long diferencaEmDias = Math.abs(ChronoUnit.DAYS.between(dataIda, dataVolta));
         int diferenca = (int) diferencaEmDias;
 
         return diferenca;

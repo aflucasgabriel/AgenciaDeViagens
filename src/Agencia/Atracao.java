@@ -11,6 +11,7 @@ public class Atracao {
     private String tipo;
     private int lotacao;
     private ArrayList<String> avaliacoes;
+    int lotacaoMaxima = 25;
 
     public Atracao(String nomeAtracao, String descricao, String horario, double preco, String tipo, Destino destino) {
         this.nomeAtracao = nomeAtracao;
@@ -20,7 +21,7 @@ public class Atracao {
         this.tipo = tipo;
         this.destino = destino;
         this.avaliacoes = new ArrayList<>();
-        this.lotacao++;
+
     }
 
     public String getNomeAtracao() {
@@ -45,7 +46,7 @@ public class Atracao {
 
     public boolean verificarDisponibilidade(){
 
-        if (lotacao >= 25){
+        if (lotacao < lotacaoMaxima){
             return true;
         }
         return false;
@@ -53,14 +54,22 @@ public class Atracao {
 
     public boolean reservar(){
 
-        return true;
+        if (lotacao < lotacaoMaxima) {
+            lotacao++;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean cancelar(){
 
-        boolean x = !reservar();
-
-        return x;
+        if (lotacao > 0) {
+            lotacao--;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void relatorioAvaliacao(String avaliacao){
