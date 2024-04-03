@@ -202,14 +202,14 @@ public class Principal {
                                                     System.out.print("Quantas bagagens extras deseja adicionar?: ");
                                                     int quantBag = sc.nextInt();
 
-                                                    passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento);
+                                                    passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento, classe);
                                                     passagemA.calculaPreco();
                                                     passagemA.adicionarBagagemExtra(quantBag);
                                                     passagem.add(passagemA);
 
                                                     Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemA);
                                                 } else {
-                                                    passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento);
+                                                    passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalRio, companhia, assento, classe);
                                                     passagemA.calculaPreco();
                                                     passagem.add(passagemA);
 
@@ -228,7 +228,7 @@ public class Principal {
                                         sc.nextLine();
 
                                         System.out.println("Por qual companhia deseja viajar? ");
-                                        if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getLocalizacao().equalsIgnoreCase("America do Norte")) {
+                                        if (Autenticacao.obterClienteLogado().getDestinoEscolhido().getLocalizacao().equalsIgnoreCase("USA")) {
                                             double totalAme = (Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa) + Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
                                             System.out.println("Latam - R$" + totalAme);
                                             System.out.println("Azul - R$" + totalAme);
@@ -247,19 +247,53 @@ public class Principal {
                                                 System.out.print("Quantas bagagens extras deseja adicionar?: ");
                                                 int quantBag = sc.nextInt();
 
-                                                passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento);
+                                                passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento, classe);
                                                 passagemA.calculaPreco();
                                                 passagemA.adicionarBagagemExtra(quantBag);
                                                 passagem.add(passagemA);
 
                                                 Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemA);
                                             } else {
-                                                passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento);
+                                                passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalAme, companhia, assento, classe);
                                                 passagemA.calculaPreco();
                                                 passagem.add(passagemA);
 
                                                 Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemA);
                                             }
+                                        }else {
+
+                                            double totalEu = (Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() * tarifaFixa) + Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco();
+                                            System.out.println("Latam - R$" + totalEu);
+                                            System.out.println("Azul - R$" + totalEu);
+                                            System.out.println("GOL - R$" + totalEu);
+                                            companhia = sc.next();
+                                            sc.nextLine();
+
+
+                                            System.out.print("Qual assento deseja reservar?(1 a 60): ");
+                                            int assento = sc.nextInt();
+
+                                            System.out.println("Deseja adicionar bagagem extra? R$50.00 por bagagem extra(s/n) ");
+                                            String bag = sc.next();
+
+                                            if (bag.equalsIgnoreCase("s")) {
+                                                System.out.print("Quantas bagagens extras deseja adicionar?: ");
+                                                int quantBag = sc.nextInt();
+
+                                                passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalEu, companhia, assento, classe);
+                                                passagemA.calculaPreco();
+                                                passagemA.adicionarBagagemExtra(quantBag);
+                                                passagem.add(passagemA);
+
+                                                Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemA);
+                                            } else {
+                                                passagemA = new PassagemAerea(origem, Autenticacao.obterClienteLogado().getDestinoEscolhido(), dataIda, dataVolta, totalEu, companhia, assento, classe);
+                                                passagemA.calculaPreco();
+                                                passagem.add(passagemA);
+
+                                                Autenticacao.obterClienteLogado().setPassagemEscolhida(passagemA);
+                                            }
+
                                         }
                                     }
 
