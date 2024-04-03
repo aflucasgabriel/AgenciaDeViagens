@@ -10,6 +10,7 @@ public class PassagemTerrestre extends Passagem{
     Random r = new Random();
     private String companhia;
     public int numRota;
+    private Destino destino;
     private int numAssento;
     private int quantAssentos = 0;
     private List<String> avaliacoes;
@@ -20,6 +21,17 @@ public class PassagemTerrestre extends Passagem{
         this.numRota = r.nextInt(1000, 8000);
         this.quantAssentos++;
         this.avaliacoes = new ArrayList<>();
+        this.destino = destino;
+    }
+
+    @Override
+    public Destino getDestino() {
+        return destino;
+    }
+
+    @Override
+    public void setDestino(Destino destino) {
+        this.destino = destino;
     }
 
     @Override

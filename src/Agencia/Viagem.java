@@ -46,7 +46,6 @@ class Viagem {
 
     public void confirmarViagem() {
         if (viagemRequisitada) {
-            // Implemente a lógica para confirmar a viagem
             System.out.println("Viagem confirmada com sucesso.");
         } else {
             System.out.println("Não é possível confirmar uma viagem que não foi requisitada.");

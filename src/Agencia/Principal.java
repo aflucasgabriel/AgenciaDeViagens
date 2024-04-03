@@ -352,7 +352,7 @@ public class Principal {
                                         System.out.println("Essas são as Atrações Pagas que você pode escolher!");
                                         for (int i =0; i< at.length; i++){
                                             System.out.println("===============================");
-                                            System.out.println("Indice" + i + "\nNome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
+                                            System.out.println("Indice: " + i + "\nNome: " + at[i].getNomeAtracao() + "\nDescrição: " + at[i].getDescricao() +
                                                     "\nHorário de Funcionamento: " + at[i].getHorario() + "\nPreço: R$" + at[i].getPreco());
                                             atracoes.add(at[i]);
                                         }
@@ -401,15 +401,29 @@ public class Principal {
                                     }
 
                                     System.out.println("\nPerfeito! \nCompra finalizada!\nVamos revisar seu pedido!");
+                                    System.out.println("=============Pedido=============");
                                     Produto produto = new Produto("Pacote de Viagem", "Escolha de Passagem, Hospedagem e Atrações para uma viagem!", Autenticacao.obterClienteLogado().getPassagemEscolhida(), Autenticacao.obterClienteLogado().getHospedagemEscolhida(), Autenticacao.obterClienteLogado().getAtracaosEscolhidas());
-                                    Autenticacao.obterClienteLogado().getDestinoEscolhido().relatorioDestino();
-                                    Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem();
-                                    Autenticacao.obterClienteLogado().getPassagemEscolhida().relatorioPassagem();
-                                    for (Atracao a : atracao) {
-                                        a.relatorioAtracao();
-                                    }
 
                                     Viagem viagem = new Viagem(Autenticacao.obterClienteLogado(), produto);
+                                    viagem.requisitarViagem();
+                                    viagem.confirmarViagem();
+                                    System.out.println("==========================");
+                                    System.out.println(Autenticacao.obterClienteLogado().getDestinoEscolhido().relatorioDestino());
+                                    System.out.println("==========================");
+                                    System.out.println(Autenticacao.obterClienteLogado().getHospedagemEscolhida().relatorioHospedagem());
+                                    System.out.println("==========================");
+                                    System.out.println(Autenticacao.obterClienteLogado().getPassagemEscolhida().relatorioPassagem());
+                                    for (Atracao a : atracao) {
+                                        System.out.println(a.relatorioAtracao());
+                                    }
+                                    double precoViagem = Autenticacao.obterClienteLogado().getDestinoEscolhido().getPreco() + Autenticacao.obterClienteLogado().getHospedagemEscolhida().calcularPreco() +
+                                            Autenticacao.obterClienteLogado().getPassagemEscolhida().getPreco();
+                                    for (Atracao a : Autenticacao.obterClienteLogado().getAtracaosEscolhidas()) {
+                                        precoViagem += a.getPreco();
+                                    }
+                                    System.out.println("==========================");
+                                    System.out.println("Preço total viagem: R$ " + precoViagem);
+
 
                                     System.out.println("Obrigado por comprar com a gente! Volte Sempre!!");
 

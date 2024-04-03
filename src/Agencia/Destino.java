@@ -60,11 +60,11 @@ public class Destino {
     }
 
     public String relatorioDestino(){
-        String relatorio = "\nNome: " + nome +
+        String relatorio = "\nDestino: " + nome +
                 "\nLocalização: " + localizacao +
                 "\nDescrição: " + descricao +
-                "\nPontos Turísticos" + pontosTuristicos +
-                "\nPreço: R%" + preco;
+                "\nPontos Turísticos: " + pontosTuristicos +
+                "\nPreço: R$" + preco;
 
         return relatorio;
     }

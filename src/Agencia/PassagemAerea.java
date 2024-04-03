@@ -13,6 +13,7 @@ public class PassagemAerea extends Passagem{
     private String classe;
     private int numVoo;
     private int numAssento;
+    private Destino destino;
     private int quantAssentos = 0;
 
     public PassagemAerea(String origem, Destino destino, LocalDate dataIda, LocalDate dataVolta, double preco, String companhiaAerea, int numAssento) {
@@ -22,7 +23,8 @@ public class PassagemAerea extends Passagem{
         this.numVoo = r.nextInt(1000 ,8000);
         this.quantAssentos++;
         this.avaliacoes = new ArrayList<>();
-
+        this.destino = destino;
+        this.numAssento = numAssento;
     }
 
 
