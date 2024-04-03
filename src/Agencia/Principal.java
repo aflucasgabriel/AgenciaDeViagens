@@ -4,12 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class Principal {
 
     public static void main(String[] args) {
@@ -807,20 +801,6 @@ public class Principal {
         }
 
         return false;
-    }
-
-
-    public static boolean verificaCredenciais(String email, String senha, ArrayList<Cliente> clientes) {
-        for (Cliente cliente : clientes) {
-            if (cliente.getEmail().equals(email) && cliente.getSenha().equals(senha)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static Cliente obterClienteLogado() {
-        return Cliente.getClienteLogado();
     }
 
     public static LocalDate dataCheckIn() {
